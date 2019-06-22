@@ -6,6 +6,10 @@
     <style>
       body {
         background-color:#fff4e4;
+        position: relative;
+      }
+      li {
+        padding:1px;
       }
       .stat {
         display:inline-block;
@@ -24,6 +28,28 @@
       }
       .false {
         color:rgb(255, 0, 119);
+      }
+      .statlist li:hover {
+        background-color:#000000;
+        color:#fff4e4;
+      }
+      .bawrks span {
+        display:block;
+      }
+      .targets {
+        color: rgb(62, 190, 147);
+      }
+      .targets span::before{
+        content: '-> ';
+      }
+      .bawrks {
+        padding:5px;
+        background-color:#000000;
+        border: #fff4e4 3px double;
+        position:absolute;
+        top:0;
+        left:0;
+        color:#fff4e4;
       }
     </style>
 </head>

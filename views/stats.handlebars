@@ -22,3 +22,35 @@
     {{/each}}
   </ol>
 </div>
+
+<div class="stat">
+  <h3>tags</h3>
+  ordered by how many pages link to them (how diluted they are)
+  <p><span class="false">red</span> means nobody links to this tag.
+  <p>
+  <ol class="statlist">
+    {{#each tagsByDilution}}
+      <li class="{{real}} page">{{tag}} ({{sources}})</li>
+    {{/each}}
+  </ol>
+</div>
+
+<div class="stat">
+  <h3>links</h3>
+  ordered by how many targets they have.
+  <p><span class="false">red</span> means no page uses this tag.
+  <p>
+  <ol class="statlist">
+    {{#each linksByTarget}}
+      <li class="{{real}} page">{{link}} ({{targets}})</li>
+    {{/each}}
+  </ol>
+</div>
+
+
+<!-- bazinga i dont care -->
+<script>
+  let bazinga = JSON.parse('{{{bazinga}}}');
+</script>
+<!-- /bazinga -->
+<script src="/pagesOnHover.js"></script>
