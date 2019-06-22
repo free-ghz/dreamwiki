@@ -34,6 +34,14 @@ fs.readFile('./static/allLinks.json', 'utf8').then(text => {
   global.allLinks = JSON.parse(text)
   console.log('read allLinks.json')
 })
+fs.readFile('./static/allTags.json', 'utf8').then(text => {
+  global.allTags = JSON.parse(text)
+  console.log('read allTags.json')
+})
+fs.readFile('./static/stats.json', 'utf8').then(text => {
+  global.stats = JSON.parse(text)
+  console.log('read stats.json')
+})
 
 app.use((request, response, next) => {
   // här kan du ha login å sån skittt yo

@@ -42,8 +42,17 @@
       .targets span::before{
         content: '-> ';
       }
-      .bawrks {
+      .sources {
+        color:rgb(255, 0, 119);
+      }
+      .sources span::after {
+        content: ' ->';
+      }
+      .targets, .sources {
+        float:left;
         padding:5px;
+      }
+      .bawrks {
         background-color:#000000;
         border: #fff4e4 3px double;
         position:absolute;

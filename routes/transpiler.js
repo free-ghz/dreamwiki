@@ -56,18 +56,81 @@ router.route('/transpiler/').all(async (req, res) => {
         }
       })
     })
-    console.log(allLinks)
+
+    // ive gotten requests by myself to do this (tag -> list of pages)
+    let allTags = {}
+    complete.forEach(page => {
+      page.outgoing.forEach(tag => {
+        if (allTags[tag]) {
+          allTags[tag].push(page.fileName)
+        } else {
+          allTags[tag] = [page.fileName]
+        }
+      })
+    })
+
+    let timeEnd = new Date().getTime()
+    let time = timeEnd - timeBegin
 
     global.complete = complete
     global.completeKeyed = completeKeyed
     global.allLinks = allLinks
+    global.allTags = allTags
     fs.writeFile('./static/complete.json', JSON.stringify(complete), 'utf8')
     fs.writeFile('./static/completeKeyed.json', JSON.stringify(completeKeyed), 'utf8')
     fs.writeFile('./static/allLinks.json', JSON.stringify(allLinks), 'utf8')
+    fs.writeFile('./static/allTags.json', JSON.stringify(allTags), 'utf8')
 
-    let timeEnd = new Date().getTime()
-    let time = timeEnd - timeBegin
-    res.redirect('/stats/?time=' + time)
+    /*
+      also build the stats here i guess!
+    */
+
+    let allIncoming = []
+    let allOutgoing = []
+    global.complete.forEach(page => {
+      page.incoming.forEach(tag => {
+        if (!allIncoming.includes(tag)) allIncoming.push(tag)
+      })
+      page.outgoing.forEach(link => {
+        if (!allOutgoing.includes(link)) allOutgoing.push(link)
+      })
+    })
+
+    // tags, ordered by how many pages use them (in their ^tags^ command)
+    let tagReaches = []
+    allIncoming.forEach(tag => {
+      let reach = 0
+      global.complete.forEach(page => {
+        if (page.incoming.includes(tag)) reach += 1
+      })
+      let real = allOutgoing.includes(tag)
+      tagReaches.push({ tag, reach, real })
+    })
+    tagReaches.sort((a, b) => {
+      return b.reach - a.reach
+    })
+
+    // links, ordered by how many pages are using them (in their text)
+    let linksFired = []
+    allOutgoing.forEach(link => {
+      let intensity = 0
+      global.complete.forEach(page => {
+        if (page.outgoing.includes(link)) intensity += 1
+      })
+      let real = allIncoming.includes(link)
+      linksFired.push({ link, intensity, real })
+    })
+    linksFired.sort((a, b) => {
+      return b.intensity - a.intensity
+    })
+
+    let timeEnd2 = new Date().getTime()
+    let time2 = timeEnd2 - timeEnd
+
+    global.stats = { tagReaches, linksFired, time, time2 }
+    fs.writeFile('./static/stats.json', JSON.stringify(global.stats), 'utf8')
+
+    res.redirect('/stats/')
   })
 })
 

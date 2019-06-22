@@ -1,4 +1,6 @@
-<h4>{{rendertime}}</h4>
+<h4>{{pages}} pages!</h4>
+rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
+<br /><br />
 <div class="stat">
   <h3>tags</h3>
   ordered by how many pages use them in their ^ tags ^ command.
@@ -23,30 +25,7 @@
   </ol>
 </div>
 
-<div class="stat">
-  <h3>tags</h3>
-  ordered by how many pages link to them (how diluted they are)
-  <p><span class="false">red</span> means nobody links to this tag.
-  <p>
-  <ol class="statlist">
-    {{#each tagsByDilution}}
-      <li class="{{real}} page">{{tag}} ({{sources}})</li>
-    {{/each}}
-  </ol>
-</div>
-
-<div class="stat">
-  <h3>links</h3>
-  ordered by how many targets they have.
-  <p><span class="false">red</span> means no page uses this tag.
-  <p>
-  <ol class="statlist">
-    {{#each linksByTarget}}
-      <li class="{{real}} page">{{link}} ({{targets}})</li>
-    {{/each}}
-  </ol>
-</div>
-
+<br style="clear:both;" />
 
 <!-- bazinga i dont care -->
 <script>

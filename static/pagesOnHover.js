@@ -4,6 +4,7 @@ let height = document.documentElement.clientHeight
 let body = document.querySelector('body')
 let li = document.querySelectorAll('li.page')
 let allLinks = bazinga.allLinks // bazinga
+let allTags = bazinga.allTags
 console.log(allLinks)
 let boxes = []
 li.forEach(link => {
@@ -40,13 +41,25 @@ function boxdims (box, mx, my) {
   let x = mx
   let y = my
   if (mx + box.offsetWidth > width) x = mx - box.offsetWidth - space
-  if (my + box.offsetHeight > height) y = height - box.offsetHeight
+  if (my + box.offsetHeight > height) y = height - box.offsetHeight - space - space
   return { x, y }
 }
 
 function createBox (link) {
   let actualLink = link.innerHTML.split(' ')[0].trim()
   let box = document.createElement('div')
+
+  if (allTags[actualLink]) {
+    let ul = document.createElement('div')
+    ul.classList.add('sources')
+    allTags[actualLink].forEach(target => {
+      let li = document.createElement('span')
+      li.innerText = target
+      ul.appendChild(li)
+    })
+    box.appendChild(ul)
+  }
+
   if (allLinks[actualLink]) {
     let ul = document.createElement('div')
     ul.classList.add('targets')
@@ -57,6 +70,10 @@ function createBox (link) {
     })
     box.appendChild(ul)
   }
+
+  let br = document.createElement('br')
+  br.style.clear = 'both'
+  box.appendChild(br)
   box.classList.add('bawrks')
   return box
 }
