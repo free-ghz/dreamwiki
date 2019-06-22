@@ -1,0 +1,24 @@
+<h4>{{rendertime}}</h4>
+<div class="stat">
+  <h3>tags</h3>
+  ordered by how many pages use them in their ^ tags ^ command.
+  <p><span class="false">red</span> means nobody links to this tag.
+  <p>
+  <ol class="statlist">
+    {{#each tagReaches}}
+      <li class="{{real}} page">{{tag}} ({{reach}})</li>
+    {{/each}}
+  </ol>
+</div>
+
+<div class="stat">
+  <h3>links</h3>
+  ordered by how many pages are using them (in their text)
+  <p><span class="false">red</span> means no page uses this tag.
+  <p>
+  <ol class="statlist">
+    {{#each linksFired}}
+      <li class="{{real}} page">{{link}} ({{intensity}})</li>
+    {{/each}}
+  </ol>
+</div>
