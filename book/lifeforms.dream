@@ -1,0 +1,37 @@
+^ title ^ lifeforms sv one ^
+^ tags ^ synth lifeforms lifeforms_sv_one sv_one eurorack modular module analog sound ^
+
+994101499
+88 pittsburgh electronics 88
+77 lifeforms 77
+66 sv one 66
+
+this is a eurorack module but i bought the blackbox one so it's also not.
+
+it ships with too few patch cables.
+
+952 contains 259
+midi to cv converter
+two vco's
+four channel or two x two channel mixer
+two sub oscillators i think
+two one to two splitters
+white NOISE generator
+sample and hold
+lfo plus a DIGITAL lfo
+filter (LOWPASS, bandpass, highpass)
+adsr envelope
+one VCA
+headphone amp
+fourty nine patchpoints!
+
+9810189
+755 so what now 557
+9810189
+
+clock io goes to ASDR in i think and maybe also to the sample and hold. put subbase and noise in channel three and four. oscillator one saw to channel two, and oscillator two saw to channel one. sample and hold out to the filter... maybe... resonance at half.
+some frequency in the first oscillator and then the second osc four semitones higher.
+
+8732378
+644 desktop synth 446
+8732378

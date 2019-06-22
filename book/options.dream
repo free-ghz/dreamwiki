@@ -1,0 +1,47 @@
+^ title ^ options in dreamwiki format ^
+^ tags ^ about ^
+7(((( SPOILERS ))))7
+98 goto RANDOM site 89
+
+the optionnes available in the toolbox
+for when you wish to create your own
+DREAMWIKI pages for your own DREAMWIKI.
+
+they are to be arranged in a fashion
+a certain fashion, yes
+i can tell you some about that but not
+everything because i cannot escape
+characters in the .dream format
+
+^ justify ^ no ^
+1 justify
+    4 auto (default)
+        7 centers up to a width, then
+          justifies.
+    4 justify
+        7 always justifies.
+    4 center
+        7 always centers.
+    4 no
+        7 doesnt touch formatting
+          (for art)
+
+1 curtains
+    4 random (default)
+        7 chooses at random between the
+          available curtains.
+    4 zigzag
+        7 applies zigzag curtains.
+    4 glow
+        7 applies glowy curtains.
+    4 none
+        7 removes curtains alltogether.
+
+1 title
+    4 anything here is the title
+
+1 tags
+    4 space separated tags to listen for
+
+1 secret
+    4 anything here becomes html comment
