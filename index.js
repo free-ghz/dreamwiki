@@ -50,6 +50,7 @@ app.use((request, response, next) => {
 
 app.use('/', require('./routes/transpiler.js'))
 app.use('/', require('./routes/stats.js'))
+app.use('/', require('./routes/index.js'))
 
 app.use((request, response, next) => {
   response.status(404).send('404 lmao')

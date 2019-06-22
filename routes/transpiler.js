@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const fs = require('fs').promises
 
-router.route('/transpiler/').all(async (req, res) => {
+router.route('/!transpiler/').all(async (req, res) => {
   let timeBegin = new Date().getTime()
   let bookContents = await fs.readdir('./book/')
   bookContents = bookContents.filter(filename => { return !filename.startsWith('.') })

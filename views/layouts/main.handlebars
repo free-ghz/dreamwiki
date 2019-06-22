@@ -5,60 +5,18 @@
     <title>title</title>
     <style>
       body {
-        background-color:#fff4e4;
+        background-color:rgb(12, 14, 9);
         position: relative;
+        font-family: 'Courier New', Courier, monospace;
+        color:rgb(91, 121, 36);
       }
-      li {
-        padding:1px;
+
+      a:link, a:visited {
+        color:rgb(171, 179, 55);
+        text-decoration:none;
       }
-      .stat {
-        display:inline-block;
-        float:left;
-        width:300px;
-        border-top:4px rgb(62, 190, 147) solid;
-        margin:2px;
-        padding:2px;
-      }
-      .statlist {
-        height:400px;
-        overflow:scroll;
-      }
-      .statlist li:nth-child(even) {
-        background-color:rgba(62, 190, 126, 0.1);
-      }
-      .false {
-        color:rgb(255, 0, 119);
-      }
-      .statlist li:hover {
-        background-color:#000000;
-        color:#fff4e4;
-      }
-      .bawrks span {
-        display:block;
-      }
-      .targets {
-        color: rgb(62, 190, 147);
-      }
-      .targets span::before{
-        content: '-> ';
-      }
-      .sources {
-        color:rgb(255, 0, 119);
-      }
-      .sources span::after {
-        content: ' ->';
-      }
-      .targets, .sources {
-        float:left;
-        padding:5px;
-      }
-      .bawrks {
-        background-color:#000000;
-        border: #fff4e4 3px double;
-        position:absolute;
-        top:0;
-        left:0;
-        color:#fff4e4;
+      a:hover, a:active {
+        color:#fff;
       }
     </style>
 </head>
