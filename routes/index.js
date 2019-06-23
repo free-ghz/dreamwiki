@@ -69,12 +69,31 @@ function pagemachine (pagetext, filename) {
   rows = overflowCollector
 
   let output = []
+  let justifier = justifyAuto // default is auto
   rows.forEach(row => {
     if (row.startsWith('^')) {
       // commands n that
+      let rowsplit = row.split('^')
+      if (rowsplit.length >= 3) {
+        let command = rowsplit[1].trim()
+        let argument = rowsplit[2].trim()
+        console.log(command, ':', argument)
+        if (command === 'justify' || command === 'align') {
+          if (argument === 'center') {
+            justifier = justifyCenter
+          } else if (argument === 'no' || argument === 'none') {
+            justifier = justifyNone
+          } else {
+            justifier = justifyAuto
+          }
+        }
+      } else {
+        // comment
+        console.log(row)
+      }
       return
     }
-    row = justifyCenter(row)
+    row = justifier(row)
     let tokens = findTokens(row)
     let rowout = ''
     tokens.forEach(token => {
@@ -117,6 +136,7 @@ function findLink (link, verboten) {
   return desiredPage
 }
 
+// center the text on the row, random tiebreaker
 function justifyCenter (row) {
   row = row.trim()
   while (row.length < 39) {
@@ -132,25 +152,51 @@ function justifyCenter (row) {
   return row
 }
 
-/* function findTokens (row) {
-  let startPos = 0
-  let endPos = 0
-  let tokens = []
-  // find a block
-  while (startPos < 40 && endPos <= 40) {
-    console.log(startPos, endPos)
-    while (row.substr(startPos, 1) === ' ') {
-      startPos += 1
-      if (startPos >= 40) return tokens
-    }
-    endPos = startPos + 1
-    while (row.substr(endPos, 1) !== ' ' && endPos <= 40) endPos += 1
-    let token = row.substring(startPos, endPos)
-    tokens.push({ start: startPos, end: endPos, token })
-    startPos = endPos
+// dont mess with the text, just add space to the right if needed
+function justifyNone (row) {
+  while (row.length < 40) {
+    row += ' '
   }
-  return tokens
-} */
+  return row
+}
+
+// fill spaces randomly until it's 40 wide
+function justifyBlock (row) {
+  if (row.length === 40) return row
+  // find indices of spaces
+  let lastspace = 0
+  let spaces = []
+  do {
+    let ind = row.indexOf(' ', lastspace)
+    if (ind === -1) {
+      break
+    }
+    spaces.push(ind)
+    lastspace = ind + 1
+  } while (true)
+  // fill em out
+  shuffle(spaces)
+  let index = 0
+  while (row.length < 40) {
+    let place = spaces[index]
+    // adjust other spaces
+    for (let i = 0; i < spaces.length; i++) {
+      if (spaces[i] > place) spaces[i] += 1
+    }
+    row = row.slice(0, place) + ' ' + row.slice(place, row.length)
+    index += 1
+  }
+  return row
+}
+
+// do center for small rows or block for large ones
+function justifyAuto (row) {
+  if (row.length > 25) { // arbitrary
+    return justifyBlock(row)
+  } else {
+    return justifyCenter(row)
+  }
+}
 
 function findTokens (row) {
   let pos = 0
@@ -172,9 +218,17 @@ function findTokens (row) {
   tokens.push({ token: ack, type })
   return tokens
 }
+
 function tokenType (letter) {
   if (letter.match(/[0-9]/)) return 'grime'
   if (letter.match(/[a-z]/)) return 'lowercase'
   if (letter.match(/[A-Z_]/)) return 'uppercase'
   return 'etc'
+}
+
+function shuffle (arr) {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    let target = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[target]] = [arr[target], arr[i]]
+  }
 }
