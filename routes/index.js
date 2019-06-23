@@ -14,6 +14,7 @@ router.route('/:dreamfile/:link').all((req, res) => {
 
 module.exports = router
 
+// must be up here due to the order things are used
 var grimeTable = [
   '#', // 0
   '##@',
@@ -61,6 +62,7 @@ function pagemachine (pagetext, filename) {
   let rows = pagetext.split('\n')
   // fix overflowing lines
   let overflowCollector = []
+  for (let i = 0; i < 5; i++) overflowCollector.push('') // five row spacing before every page
   rows.forEach(row => {
     if (row.startsWith('^')) return overflowCollector.push(row) // preserve
     if (row.length <= 40) return overflowCollector.push(row)
@@ -78,10 +80,13 @@ function pagemachine (pagetext, filename) {
     }
     overflowCollector.push(newRow)
   })
+  for (let i = 0; i < 5; i++) overflowCollector.push('') // five row spacing after
   rows = overflowCollector
 
   let output = []
+  let curtainCommands = [] // curtains are to be generated afterwards so we should save the commands for em
   let justifier = justifyAuto // default is auto
+  let rowNumber = 0
   rows.forEach(row => {
     // console.log('|------------------()------------------|')
     if (row.startsWith('^')) {
@@ -110,6 +115,10 @@ function pagemachine (pagetext, filename) {
           secrets.push(argument)
         } else if (command === 'title') {
           title = argument
+        } else if (command === 'curtains' || command === 'curtainGrimes') {
+          let skvaller = { rowNumber, command, argument }
+          if (skvaller.rowNumber === 5) skvaller.rowNumber = 0 // first row of text is actually the fifth but go off
+          curtainCommands.push(skvaller)
         } else if (command === 'tags') {
           // ignored, not useful in this context
         } else {
@@ -122,6 +131,7 @@ function pagemachine (pagetext, filename) {
       }
       return
     }
+    rowNumber += 1 // safe to increase here (before actual row work is done), only really used in commands
     row = justifier(row)
     let tokens = findTokens(row)
     let rowout = ''
@@ -144,7 +154,41 @@ function pagemachine (pagetext, filename) {
     })
     return output.push(rowout)
   })
-  output = output.join('\n')
+
+  // create curtains
+  let outputAck = ''
+  rowNumber = 0
+  let curtainer = randomCurtains()
+  let curtainGrimer = randomGrimer()
+  output.forEach(row => {
+    curtainCommands.forEach(possibleCommand => {
+      if (possibleCommand.rowNumber === rowNumber) {
+        if (possibleCommand.command === 'curtains') {
+          let a = possibleCommand.argument
+          if (a === 'none' || a === 'no') {
+            curtainer = noCurtains
+          } else if (a === 'glow') {
+            curtainer = glowCurtains
+          } else if (a === 'reverseGlow') {
+            curtainer = reversedGlowCurtains
+          } else if (a === 'random') {
+            curtainer = randomCurtains()
+          }
+        } else if (possibleCommand.command === 'curtainGrimes') {
+          if (possibleCommand.argument === 'stable') {
+            curtainGrimer = stableGrimes()
+          } else {
+            curtainGrimer = unstableGrimes
+          }
+        }
+      }
+    })
+    let curtains = curtainer(curtainGrimer)
+    outputAck += '<span class="grime">' + curtains.left + '</span> ' + row + ' <span class="grime">' + curtains.right + '</span>\n'
+    rowNumber += 1
+  })
+
+  output = outputAck // output.join('\n')
   return { output, title, secrets }
 }
 
@@ -220,7 +264,7 @@ function justifyBlock (row) {
 
 // do center for small rows or block for large ones
 function justifyAuto (row) {
-  if (row.length > 25) { // arbitrary
+  if (row.trim().length > 25) { // arbitrary
     return justifyBlock(row)
   } else {
     return justifyCenter(row)
@@ -272,6 +316,10 @@ function shuffle (arr) {
   }
 }
 
+function randomGrimer () {
+  return choice([unstableGrimes, stableGrimes()])
+}
+
 function unstableGrimes (number) {
   return grimeTable[number].substr(Math.floor(Math.random() * grimeTable[number].length), 1)
 }
@@ -280,8 +328,90 @@ function stableGrimes () {
   for (let i = 0; i < 10; i++) {
     localTable.push(grimeTable[i].substr(Math.floor(Math.random() * grimeTable[i].length), 1))
   }
-  console.log(localTable)
   return (number) => {
     return localTable[number]
   }
+}
+
+function randomCurtains () {
+  return choice([glowCurtains, glowCurtains, reversedGlowCurtains, zigzagCurtains(), zigzagCurtains()])
+}
+
+function glowCurtains (grimer) {
+  let bias = Math.floor(Math.random() * 5) - 1
+  let right = ''
+  for (let i = 0; i < 10; i++) {
+    let digit = i
+    if (bias) digit = digit + bias
+    if (digit > 9) digit = 9
+    if (digit < 0) digit = 0
+    if (bias) {
+      bias += Math.floor(Math.random() * 3) - 1
+      if (bias < -1) bias = -1
+    }
+    right += '' + grimer(digit)
+  }
+  let left = right.split('').reverse().join('')
+  return { left, right }
+}
+
+function reversedGlowCurtains (grimer) {
+  let c = glowCurtains(grimer)
+  return { left: c.right, right: c.left }
+}
+
+function noCurtains () {
+  return { left: '          ', right: '          ' }
+}
+
+function zigzagCurtains () {
+  let min = 11
+  let max = 24
+  let thisTime = min + Math.floor(Math.random() * (max - min))
+  let bias = Math.floor(Math.random() * 3) - 2
+  let zag = ''
+  for (let i = 0; i < thisTime; i++) {
+    let digit = i
+    if (bias) digit = digit + bias
+    if (digit > 9) digit = 9
+    if (digit < 0) digit = 0
+    if (bias) {
+      bias += Math.floor(Math.random() * 3) - 1
+      if (bias < -1) bias = -1
+    }
+    zag += '' + digit
+  }
+  zag += zag
+
+  let maxIns = thisTime - 10 // curtains are 10 wide
+  let i = Math.floor(Math.random() * maxIns)
+  let dir = Math.floor(Math.random() * 2) === 1
+  if (i === 0) {
+    dir = false
+  } else if (i === maxIns) {
+    dir = true
+  }
+  let reversed = Math.floor(Math.random() * 2) === 1
+  return (grimer) => {
+    let returnString = grimeString(zag.substr(i, 10), grimer)
+    if (dir) {
+      i -= 1
+      if (i <= 0) dir = false
+    } else {
+      i += 1
+      if (i >= maxIns) dir = true
+    }
+
+    let rev = returnString.split('').reverse().join('')
+    if (reversed) return { left: rev, right: returnString }
+    return { left: returnString, right: rev }
+  }
+}
+
+function grimeString (string, grimer) {
+  let out = ''
+  for (let i = 0; i < string.length; i++) {
+    out += grimer(string.substr(i,1))
+  }
+  return out
 }
