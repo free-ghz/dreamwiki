@@ -45,22 +45,56 @@ async function pagefuck (req, res) {
 //      hur har jag gjort i gamla dw för att undvika fuckups i filnamn med siffror i?
 
 function pagemachine (pagetext, filename) {
-  let output = []
   // this all happens by row
   let rows = pagetext.split('\n')
+  // fix overflowing lines
+  let overflowCollector = []
   rows.forEach(row => {
-    let rowout = []
+    if (row.startsWith('^')) return overflowCollector.push(row) // preserve
+    if (row.length <= 40) return overflowCollector.push(row)
     let words = row.split(' ')
-    words.forEach(word => {
-      if (word.trim().length === 0) return
-      let wordlink = linkExists(word, filename)
-      if (wordlink) {
-        rowout.push('<a href="' + word.toLowerCase() + '">' + word + '</a>')
+    let i = 1
+    let newRow = words[0]
+    while (i < words.length) {
+      if (newRow.length + words[i].length + 1 <= 40) {
+        newRow += ' ' + words[i]
       } else {
-        rowout.push(word)
+        overflowCollector.push(newRow)
+        newRow = words[i]
+      }
+      i += 1
+    }
+    overflowCollector.push(newRow)
+  })
+  rows = overflowCollector
+
+  let output = []
+  rows.forEach(row => {
+    if (row.startsWith('^')) {
+      // commands n that
+      return
+    }
+    row = justifyCenter(row)
+    let tokens = findTokens(row)
+    let rowout = ''
+    tokens.forEach(token => {
+      if (token.type === 'etc') return rowout += token.token
+      if (token.type === 'grime') return rowout += '<span class="grime">' + token.token + '</span>'
+
+      let wordlink = linkExists(token.token, filename)
+      let capsOrNot = ''
+      let tokenDisplay = token.token
+      if (token.type === 'uppercase') {
+        capsOrNot = 'class="link"'
+        tokenDisplay = tokenDisplay.replace(/_/g, ' ')
+      }
+      if (wordlink) {
+        rowout += '<a href="' + token.token.toLowerCase() + '/" ' + capsOrNot + '>' + tokenDisplay + '</a>'
+      } else {
+        rowout += tokenDisplay
       }
     })
-    output.push(rowout.join(' '))
+    return output.push(rowout)
   })
   output = output.join('\n')
   return output
@@ -81,4 +115,66 @@ function findLink (link, verboten) {
     var desiredPage = choice(global.allLinks[link.toLowerCase()])
   } while (verboten && desiredPage === verboten)
   return desiredPage
+}
+
+function justifyCenter (row) {
+  row = row.trim()
+  while (row.length < 39) {
+    row = ' ' + row + ' '
+  }
+  if (row.length !== 40) {
+    if (Math.random() < 0.5) {
+      row = ' ' + row
+    } else {
+      row += ' '
+    }
+  }
+  return row
+}
+
+/* function findTokens (row) {
+  let startPos = 0
+  let endPos = 0
+  let tokens = []
+  // find a block
+  while (startPos < 40 && endPos <= 40) {
+    console.log(startPos, endPos)
+    while (row.substr(startPos, 1) === ' ') {
+      startPos += 1
+      if (startPos >= 40) return tokens
+    }
+    endPos = startPos + 1
+    while (row.substr(endPos, 1) !== ' ' && endPos <= 40) endPos += 1
+    let token = row.substring(startPos, endPos)
+    tokens.push({ start: startPos, end: endPos, token })
+    startPos = endPos
+  }
+  return tokens
+} */
+
+function findTokens (row) {
+  let pos = 0
+  let tokens = []
+  let ack = row.substr(pos, 1)
+  let type = tokenType(ack)
+  pos += 1
+  while (pos < 40) {
+    let next = row.substr(pos, 1)
+    if (tokenType(next) === type) {
+      ack += next
+    } else {
+      tokens.push({ token: ack, type })
+      ack = next
+      type = tokenType(next)
+    }
+    pos += 1
+  }
+  tokens.push({ token: ack, type })
+  return tokens
+}
+function tokenType (letter) {
+  if (letter.match(/[0-9]/)) return 'grime'
+  if (letter.match(/[a-z]/)) return 'lowercase'
+  if (letter.match(/[A-Z_]/)) return 'uppercase'
+  return 'etc'
 }
