@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+{{#each secrets}}<!-- {{this}} -->
+{{/each}}<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>title</title>
+    <title>{{#if title}}{{title}}{{else}}dreamwiki!{{/if}}</title>
     <style>
       body {
-        background-color:rgb(12, 15, 8);
+        background-color:#fff4e4;
         position: relative;
         font-family: 'Courier New', Courier, monospace;
-        color:rgb(110, 134, 68);
+        color:#000;
       }
       pre {
         margin:0 auto;
@@ -17,18 +18,20 @@
         text-align:center;
       }
       .grime {
-        color:rgb(67, 97, 15);
+        color:rgb(62, 190, 147);
       }
       a:link, a:visited {
-        color:rgb(214, 221, 115);
+        color:rgb(255, 0, 119);
         text-decoration:none;
       }
       a.link:link, a.link:visited {
-        color:rgb(247, 204, 12);
+        color:#fff4e4;
+        background-color:rgb(255, 0, 119);
         text-decoration:none;
       }
       a:hover, a:active {
-        color:#fff !important;
+        color:#000 !important;
+        background: none !important;
       }
     </style>
 </head>

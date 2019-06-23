@@ -130,7 +130,7 @@ router.route('/!transpiler/').all(async (req, res) => {
     global.stats = { tagReaches, linksFired, time, time2 }
     fs.writeFile('./static/stats.json', JSON.stringify(global.stats), 'utf8')
 
-    res.redirect('/stats/')
+    res.redirect('/!stats/')
   })
 })
 

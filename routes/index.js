@@ -14,6 +14,19 @@ router.route('/:dreamfile/:link').all((req, res) => {
 
 module.exports = router
 
+var grimeTable = [
+  '#', // 0
+  '##@',
+  '##@@£¶',
+  '#@£§&', // 3
+  '@££$$§%%&*',
+  '%%§$=†**^', // 5
+  '†/\\=;:*^', // 6
+  '=~~-', // 7
+  ':,,.^~-', // 8
+  '.,¨' // 9
+]
+
 async function pagefuck (req, res) {
   if (req.url.includes('.') && !req.url.includes('.dream')) return req.next()
 
@@ -36,15 +49,14 @@ async function pagefuck (req, res) {
   let pagetext = await fs.readFile('./book/' + dreamfile, 'utf8')
   let page = pagemachine(pagetext, dreamfile)
 
-  return res.render('page.handlebars', { page })
+  return res.render('page.handlebars', page)
 }
 
-// 1. fixa spaces (för det behöver en normal tecken count)
-// 2. fixa links (för det behöver att texten ser OK ut)
-// 3. fixa siffror för det behöver ingenting
-//      hur har jag gjort i gamla dw för att undvika fuckups i filnamn med siffror i?
-
+var grimer = stableGrimes() // will only be run once per server restart!
 function pagemachine (pagetext, filename) {
+  grimer = stableGrimes() // ensures new randomization every time!
+  let title = filename
+  let secrets = []
   // this all happens by row
   let rows = pagetext.split('\n')
   // fix overflowing lines
@@ -71,21 +83,38 @@ function pagemachine (pagetext, filename) {
   let output = []
   let justifier = justifyAuto // default is auto
   rows.forEach(row => {
+    // console.log('|------------------()------------------|')
     if (row.startsWith('^')) {
       // commands n that
       let rowsplit = row.split('^')
       if (rowsplit.length >= 3) {
         let command = rowsplit[1].trim()
         let argument = rowsplit[2].trim()
-        console.log(command, ':', argument)
         if (command === 'justify' || command === 'align') {
           if (argument === 'center') {
             justifier = justifyCenter
           } else if (argument === 'no' || argument === 'none') {
             justifier = justifyNone
+          } else if (argument === 'random') {
+            justifier = choice([justifyBlock, justifyCenter, justifyNone])
           } else {
             justifier = justifyAuto
           }
+        } else if (command === 'grimes') {
+          if (argument === 'stable') {
+            grimer = stableGrimes() // create a new instance of a stableGrimer
+          } else {
+            grimer = unstableGrimes // same function every time (grimer is a function)
+          }
+        } else if (command === 'secret') {
+          secrets.push(argument)
+        } else if (command === 'title') {
+          title = argument
+        } else if (command === 'tags') {
+          // ignored, not useful in this context
+        } else {
+          // could be known if i have put some weird stuff in there
+          console.log(filename, '\t- i donno what to do with ----> \t', command, ':', argument)
         }
       } else {
         // comment
@@ -116,7 +145,7 @@ function pagemachine (pagetext, filename) {
     return output.push(rowout)
   })
   output = output.join('\n')
-  return output
+  return { output, title, secrets }
 }
 
 function choice (arr) {
@@ -184,7 +213,7 @@ function justifyBlock (row) {
       if (spaces[i] > place) spaces[i] += 1
     }
     row = row.slice(0, place) + ' ' + row.slice(place, row.length)
-    index += 1
+    index = (index + 1 + spaces.length) % spaces.length
   }
   return row
 }
@@ -201,17 +230,27 @@ function justifyAuto (row) {
 function findTokens (row) {
   let pos = 0
   let tokens = []
-  let ack = row.substr(pos, 1)
-  let type = tokenType(ack)
-  pos += 1
+  let ack = '' // row.substr(pos, 1)
+  let type = 'nada'
+  // pos += 0
   while (pos < 40) {
     let next = row.substr(pos, 1)
-    if (tokenType(next) === type) {
-      ack += next
+    if (tokenType(next) === type || pos === 0) {
+      if (pos === 0) type = tokenType(next)
+      // ill try to do the grime duty here
+      if (type === 'grime') {
+        ack += grimer(next)
+      } else {
+        ack += next
+      }
     } else {
       tokens.push({ token: ack, type })
-      ack = next
       type = tokenType(next)
+      if (type === 'grime') {
+        ack = grimer(next)
+      } else {
+        ack = next
+      }
     }
     pos += 1
   }
@@ -230,5 +269,19 @@ function shuffle (arr) {
   for (let i = arr.length - 1; i >= 0; i--) {
     let target = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[target]] = [arr[target], arr[i]]
+  }
+}
+
+function unstableGrimes (number) {
+  return grimeTable[number].substr(Math.floor(Math.random() * grimeTable[number].length), 1)
+}
+function stableGrimes () {
+  let localTable = []
+  for (let i = 0; i < 10; i++) {
+    localTable.push(grimeTable[i].substr(Math.floor(Math.random() * grimeTable[i].length), 1))
+  }
+  console.log(localTable)
+  return (number) => {
+    return localTable[number]
   }
 }
