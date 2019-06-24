@@ -162,7 +162,7 @@ async function readBook (fileName) {
         if (word.toLowerCase() === word) {
           outgoing.add(word.toLowerCase())
         } else {
-          word = word.replace(/[^A-Z]/, '')
+          word = word.replace(/[^A-Z_]/, '')
           if (word.trim().length === 0) return
           outgoing.add(word.toLowerCase())
         }

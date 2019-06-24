@@ -23,7 +23,7 @@ var grimeTable = [
   '@££$$§%%&*¤',
   '%%§$=†**^', // 5
   '†/\\=;:*^', // 6
-  '=~~-', // 7
+  '=~~-«»', // 7
   ':,,.^~-', // 8
   '.,¨' // 9
 ]
@@ -100,8 +100,10 @@ function pagemachine (pagetext, filename) {
             justifier = justifyCenter
           } else if (argument === 'no' || argument === 'none') {
             justifier = justifyNone
+          } else if (argument === 'left') {
+            justifier = justifyAutoLeft
           } else if (argument === 'random') {
-            justifier = choice([justifyBlock, justifyCenter, justifyNone])
+            justifier = choice([justifyBlock, justifyCenter, justifyNone, justifyAutoLeft])
           } else {
             justifier = justifyAuto
           }
@@ -235,6 +237,7 @@ function justifyNone (row) {
 
 // fill spaces randomly until it's 40 wide
 function justifyBlock (row) {
+  row = row.trim()
   if (row.length === 40) return row
   // find indices of spaces
   let lastspace = 0
@@ -271,6 +274,14 @@ function justifyAuto (row) {
   }
 }
 
+function justifyAutoLeft (row) {
+  if (row.trim().length > 25) { // arbitrary
+    return justifyBlock(row)
+  } else {
+    return justifyNone(row)
+  }
+}
+
 function findTokens (row) {
   let pos = 0
   let tokens = []
@@ -304,7 +315,7 @@ function findTokens (row) {
 
 function tokenType (letter) {
   if (letter.match(/[0-9]/)) return 'grime'
-  if (letter.match(/[a-z]/)) return 'lowercase'
+  if (letter.match(/[a-z_]/)) return 'lowercase'
   if (letter.match(/[A-Z_]/)) return 'uppercase'
   return 'etc'
 }
