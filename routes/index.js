@@ -2,6 +2,11 @@
 const router = require('express').Router()
 const fs = require('fs').promises
 
+const helpers = require('../lib/helpers.js')
+const choice = helpers.choice
+const grimes = require('../lib/grimes.js')
+const justify = require('../lib/justify.js')
+
 router.route('/').all((req, res) => {
   return res.redirect('/welcome.dream/')
 })
@@ -13,20 +18,6 @@ router.route('/:dreamfile/:link').all((req, res) => {
 })
 
 module.exports = router
-
-// must be up here due to the order things are used
-var grimeTable = [
-  '#', // 0
-  '##@',
-  '##@@£¶',
-  '#@£§&¤', // 3
-  '@££$$§%%&*¤',
-  '%%§$=†**^', // 5
-  '†/\\=;:*^', // 6
-  '=~~-«»', // 7
-  ':,,.^~-', // 8
-  '.,¨' // 9
-]
 
 async function pagefuck (req, res) {
   if (req.url.includes('.') && !req.url.includes('.dream')) return req.next()
@@ -61,9 +52,9 @@ async function pagefuck (req, res) {
   return res.render('page.handlebars', page)
 }
 
-var grimer = stableGrimes() // will only be run once per server restart!
+var grimer = grimes.stableGrimes() // will only be run once per server restart!
 function pagemachine (pagetext, filename) {
-  grimer = stableGrimes() // ensures new randomization every time!
+  grimer = grimes.stableGrimes() // ensures new randomization every time!
   let title = filename
   let secrets = []
   // this all happens by row
@@ -93,7 +84,7 @@ function pagemachine (pagetext, filename) {
 
   let output = []
   let curtainCommands = [] // curtains are to be generated afterwards so we should save the commands for em
-  let justifier = justifyAuto // default is auto
+  let justifier = justify.justifyAuto // default is auto
   let rowNumber = 0
   rows.forEach(row => {
     // console.log('|------------------()------------------|')
@@ -105,21 +96,21 @@ function pagemachine (pagetext, filename) {
         let argument = rowsplit[2].trim()
         if (command === 'justify' || command === 'align') {
           if (argument === 'center') {
-            justifier = justifyCenter
+            justifier = justify.justifyCenter
           } else if (argument === 'no' || argument === 'none') {
-            justifier = justifyNone
+            justifier = justify.justifyNone
           } else if (argument === 'left') {
-            justifier = justifyAutoLeft
+            justifier = justify.justifyAutoLeft
           } else if (argument === 'random') {
-            justifier = choice([justifyBlock, justifyCenter, justifyNone, justifyAutoLeft])
+            justifier = choice([justify.justifyBlock, justify.justifyCenter, justify.justifyNone, justify.justifyAutoLeft])
           } else {
-            justifier = justifyAuto
+            justifier = justify.justifyAuto
           }
         } else if (command === 'grimes') {
           if (argument === 'stable') {
-            grimer = stableGrimes() // create a new instance of a stableGrimer
+            grimer = grimes.stableGrimes() // create a new instance of a stableGrimer
           } else {
-            grimer = unstableGrimes // same function every time (grimer is a function)
+            grimer = grimes.unstableGrimes // same function every time (grimer is a function)
           }
         } else if (command === 'secret') {
           secrets.push(argument)
@@ -146,8 +137,14 @@ function pagemachine (pagetext, filename) {
     let tokens = findTokens(row)
     let rowout = ''
     tokens.forEach(token => {
-      if (token.type === 'etc') return rowout += token.token
-      if (token.type === 'grime') return rowout += '<span class="grime">' + token.token + '</span>'
+      if (token.type === 'etc') {
+        rowout += token.token
+        return
+      }
+      if (token.type === 'grime') {
+        rowout += '<span class="grime">' + token.token + '</span>'
+        return
+      }
 
       let wordlink = linkExists(token.token, filename)
       let capsOrNot = ''
@@ -168,7 +165,7 @@ function pagemachine (pagetext, filename) {
   let outputAck = ''
   rowNumber = 0
   let curtainer = randomCurtains()
-  let curtainGrimer = randomGrimer()
+  let curtainGrimer = grimes.randomGrimer()
   output.forEach(row => {
     curtainCommands.forEach(possibleCommand => {
       if (possibleCommand.rowNumber === rowNumber) {
@@ -185,9 +182,9 @@ function pagemachine (pagetext, filename) {
           }
         } else if (possibleCommand.command === 'curtainGrimes') {
           if (possibleCommand.argument === 'stable') {
-            curtainGrimer = stableGrimes()
+            curtainGrimer = grimes.stableGrimes()
           } else {
-            curtainGrimer = unstableGrimes
+            curtainGrimer = grimes.unstableGrimes
           }
         }
       }
@@ -201,13 +198,9 @@ function pagemachine (pagetext, filename) {
   return { output, title, secrets }
 }
 
-function choice (arr) {
-  return arr[Math.floor(Math.random() * arr.length)]
-}
-
 function linkExists (word, filename) {
   if (!global.allLinks[word.toLowerCase()]) return false
-  if (filename && global.allLinks[word.toLowerCase()].length == 1 && global.allLinks[word.toLowerCase()][0] === filename) return false
+  if (filename && global.allLinks[word.toLowerCase()].length === 1 && global.allLinks[word.toLowerCase()][0] === filename) return false
   return true
 }
 
@@ -216,77 +209,6 @@ function findLink (link, verboten) {
     var desiredPage = choice(global.allLinks[link.toLowerCase()])
   } while (verboten && desiredPage === verboten)
   return desiredPage
-}
-
-// center the text on the row, random tiebreaker
-function justifyCenter (row) {
-  row = row.trim()
-  while (row.length < 39) {
-    row = ' ' + row + ' '
-  }
-  if (row.length !== 40) {
-    if (Math.random() < 0.5) {
-      row = ' ' + row
-    } else {
-      row += ' '
-    }
-  }
-  return row
-}
-
-// dont mess with the text, just add space to the right if needed
-function justifyNone (row) {
-  while (row.length < 40) {
-    row += ' '
-  }
-  return row
-}
-
-// fill spaces randomly until it's 40 wide
-function justifyBlock (row) {
-  row = row.trim()
-  if (row.length === 40) return row
-  // find indices of spaces
-  let lastspace = 0
-  let spaces = []
-  do {
-    let ind = row.indexOf(' ', lastspace)
-    if (ind === -1) {
-      break
-    }
-    spaces.push(ind)
-    lastspace = ind + 1
-  } while (true)
-  // fill em out
-  shuffle(spaces)
-  let index = 0
-  while (row.length < 40) {
-    let place = spaces[index]
-    // adjust other spaces
-    for (let i = 0; i < spaces.length; i++) {
-      if (spaces[i] > place) spaces[i] += 1
-    }
-    row = row.slice(0, place) + ' ' + row.slice(place, row.length)
-    index = (index + 1 + spaces.length) % spaces.length
-  }
-  return row
-}
-
-// do center for small rows or block for large ones
-function justifyAuto (row) {
-  if (row.trim().length > 25) { // arbitrary
-    return justifyBlock(row)
-  } else {
-    return justifyCenter(row)
-  }
-}
-
-function justifyAutoLeft (row) {
-  if (row.trim().length > 25) { // arbitrary
-    return justifyBlock(row)
-  } else {
-    return justifyNone(row)
-  }
 }
 
 function findTokens (row) {
@@ -319,30 +241,6 @@ function tokenType (letter) {
   if (letter.match(/[a-z_]/)) return 'lowercase'
   if (letter.match(/[A-Z_]/)) return 'uppercase'
   return 'etc'
-}
-
-function shuffle (arr) {
-  for (let i = arr.length - 1; i >= 0; i--) {
-    let target = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[target]] = [arr[target], arr[i]]
-  }
-}
-
-function randomGrimer () {
-  return choice([unstableGrimes, stableGrimes()])
-}
-
-function unstableGrimes (number) {
-  return grimeTable[number].substr(Math.floor(Math.random() * grimeTable[number].length), 1)
-}
-function stableGrimes () {
-  let localTable = []
-  for (let i = 0; i < 10; i++) {
-    localTable.push(grimeTable[i].substr(Math.floor(Math.random() * grimeTable[i].length), 1))
-  }
-  return (number) => {
-    return localTable[number]
-  }
 }
 
 function randomCurtains () {
@@ -405,7 +303,7 @@ function zigzagCurtains () {
   }
   let reversed = Math.floor(Math.random() * 2) === 1
   return (grimer) => {
-    let returnString = grimeString(zag.substr(i, 10), grimer)
+    let returnString = grimes.grimeString(zag.substr(i, 10), grimer)
     if (dir) {
       i -= 1
       if (i <= 0) dir = false
@@ -418,12 +316,4 @@ function zigzagCurtains () {
     if (reversed) return { left: rev, right: returnString }
     return { left: returnString, right: rev }
   }
-}
-
-function grimeString (string, grimer) {
-  let out = ''
-  for (let i = 0; i < string.length; i++) {
-    out += grimer(string.substr(i,1))
-  }
-  return out
 }
