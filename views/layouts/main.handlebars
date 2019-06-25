@@ -6,10 +6,10 @@
     <title>{{#if title}}{{title}}{{else}}dreamwiki!{{/if}}</title>
     <style>
       body {
-        background-color:#323;
+        background-color:{{ colour.wall }};
         position: relative;
         font-family: 'Courier New', Courier, monospace;
-        color:#eac;
+        color: {{ colour.prim }};
       }
       pre {
         margin:0 auto;
@@ -18,19 +18,18 @@
         text-align:center;
       }
       .grime {
-        color:#736;
+        color:{{ colour.grime }};
       }
       a:link, a:visited {
-        color:#f5a;
+        color:{{ colour.hint }};
         text-decoration:none;
       }
       a.link:link, a.link:visited {
-        color:#323;
-        background-color:rgb(255, 0, 119);
+        color:#fff;
         text-decoration:none;
       }
       a:hover, a:active {
-        color:#fff !important;
+        color:{{ colour.grime }} !important;
         background: none !important;
       }
     </style>

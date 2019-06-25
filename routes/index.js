@@ -6,6 +6,7 @@ const helpers = require('../lib/helpers.js')
 const choice = helpers.choice
 const grimes = require('../lib/grimes.js')
 const justify = require('../lib/justify.js')
+const colourScheme = require('../lib/colour.js')
 
 router.route('/').all((req, res) => {
   return res.redirect('/welcome.dream/')
@@ -48,6 +49,7 @@ async function pagefuck (req, res) {
   })
   if (pagetext === undefined) return
   let page = pagemachine(pagetext, dreamfile)
+  page.colour = colourScheme()
 
   return res.render('page.handlebars', page)
 }
@@ -148,7 +150,7 @@ function pagemachine (pagetext, filename) {
 
       let wordlink = linkExists(token.token, filename)
       let capsOrNot = ''
-      let tokenDisplay = token.token.replace(/_/g, ' ')
+      let tokenDisplay = token.token.replace(/_/g, ' ').toUpperCase()
       if (token.type === 'uppercase') {
         capsOrNot = 'class="link"'
       }

@@ -1,17 +1,8 @@
 'use strict'
-// <!-- ja ska ha som en template set up all skit figur
-// du kommer också behöva:
-// static/ <-- statisk resurs
-// views/
-//   |-layouts/
-//   |    |-main.handlebars <-- huvud layout för "html grafik". den behöver {{{body}}}
-//   |-(skit.handlebars här)
-//
 const express = require('express')
 const hbars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const path = require('path')
-const session = require('express-session')
 const porttu = 7004
 const fs = require('fs').promises
 
@@ -50,6 +41,7 @@ app.use((request, response, next) => {
 
 app.use('/', require('./routes/transpiler.js'))
 app.use('/', require('./routes/stats.js'))
+app.use('/', require('./routes/primer.js'))
 app.use('/', require('./routes/index.js'))
 
 app.use((request, response, next) => {
