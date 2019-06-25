@@ -6,6 +6,8 @@ mmm.
 - stats: pages and their ins and outs
 - colours
 - cellular automata
+- external links (maybe do a !primer or smth)
+- caps lock
 
 # bugs
-- underscores divide uppercase stuff, problem with tokenizer
+- none that i found yet :)

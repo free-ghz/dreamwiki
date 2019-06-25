@@ -285,27 +285,21 @@ function justifyAutoLeft (row) {
 function findTokens (row) {
   let pos = 0
   let tokens = []
-  let ack = '' // row.substr(pos, 1)
+  let ack = ''
   let type = 'nada'
-  // pos += 0
   while (pos < 40) {
     let next = row.substr(pos, 1)
-    if (tokenType(next) === type || pos === 0) {
-      if (pos === 0) type = tokenType(next)
-      // ill try to do the grime duty here
-      if (type === 'grime') {
-        ack += grimer(next)
-      } else {
-        ack += next
-      }
-    } else {
+    if (pos === 0) type = tokenType(next)
+    if (tokenType(next) !== type && next !== '_') {
       tokens.push({ token: ack, type })
       type = tokenType(next)
-      if (type === 'grime') {
-        ack = grimer(next)
-      } else {
-        ack = next
-      }
+      ack = ''
+    }
+    // ill try to do the grime duty here
+    if (type === 'grime') {
+      ack += grimer(next)
+    } else {
+      ack += next
     }
     pos += 1
   }
