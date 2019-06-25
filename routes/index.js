@@ -47,7 +47,15 @@ async function pagefuck (req, res) {
     }
   }
 
-  let pagetext = await fs.readFile('./book/' + dreamfile, 'utf8')
+  let pagetext = await fs.readFile('./book/' + dreamfile, 'utf8').catch(err => {
+    if (err.errno === -2) {
+      res.redirect('/fourohfour.dream/')
+    } else {
+      console.err(err)
+      res.status(500).send('500 somehow')
+    }
+  })
+  if (pagetext === undefined) return
   let page = pagemachine(pagetext, dreamfile)
 
   return res.render('page.handlebars', page)
@@ -143,10 +151,9 @@ function pagemachine (pagetext, filename) {
 
       let wordlink = linkExists(token.token, filename)
       let capsOrNot = ''
-      let tokenDisplay = token.token
+      let tokenDisplay = token.token.replace(/_/g, ' ')
       if (token.type === 'uppercase') {
         capsOrNot = 'class="link"'
-        tokenDisplay = tokenDisplay.replace(/_/g, ' ')
       }
       if (wordlink) {
         rowout += '<a href="' + token.token.toLowerCase() + '/" ' + capsOrNot + '>' + tokenDisplay + '</a>'
