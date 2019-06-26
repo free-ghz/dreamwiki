@@ -1,2 +1,74 @@
 <h1>dreamwiki primer</h1>
-figure it out
+hi and welcome to the dreamwiki primer!
+<img src="hi.png" />
+<h2>what is this <i>"dream wiki"</i></h2>
+if youve seen that gif of a lecturer for a computer science class and he writes "computer science" on the blackboard and then crosses out computer. and a few seconds later crosses out science as well.
+well if youve seen that one, its a lot like that.
+<h2>how do i use it</h2>
+you click the <a href="/links">links</a> to get to a new page relevant to the linked word. like if the page on thirst has the word "<a href="/water">water</a>". if you click that you might get to the page of advice on taking nice baths, because thats also about water. brighter links are more relevant, somehow.
+<h2>how is it made</h2>
+when i wake up sweating in the middle of the night i immediately record my <a href="dreams/">dreams</a> to a magnetic <a href="/tape">tape</a>. later i extract the nuances of it into 50% vodka. a few months later i get drunk as fuck and write all this shit
+<h2>can u get technical about that</h2>
+yea but thers massiv espoilers!!!!!!!!!<br />
+<br /><br /><br /><br /><h3>i mean it theres spoilers here it takes away "the magix"</h3>
+ok so you just write a bunch of text files and put em in the <b>books/</b> folder.
+<p>some rules regarding the dream files
+<ol>
+  <li>they are to end with <b>.dream</b> like "sludge.dream"</li>
+  <li>use only "unix" line endinges ie. put \n but never \r (if u dont unerstand this it means dont be on windows computer)</li>
+  <li>the max pagewidth is 40 chars. longer paragraphs will automatically be flowed unto new lines but dont put a single 41 character word or the shit will fail</li>
+  <li>things written in UPPER_CASE become teh brighter links (in the beginning only these were linkified but that sucked</li>
+  <li>numbers are <i>transformed into grime!</i> theyre on a scale 0 (boulders) to 9 (pebbles). sevens are nice. <b>this means that you should avoid putting them in tags and shit.</b></li>
+  <li>u can control some stuff with commands
+    <ul>
+      <li>commands are lines starting with the caret thing <b>^</b>, and will never be shown on the page</li>
+      <li>they follow the format <b>^ command ^ argument(s) ^</b></li>
+      <li>if theyre not understood theyll be very gracefully completely ignored</li>
+      <li>example: <b>^ justify ^ none ^</b></li>
+      <li>or: <b>^ tags ^ shard ass booty crystal mineral hunk ^</b></li>
+    </ul>
+    here follows a list of available commands.
+    <ol>
+      <li><u>title</u> - sets the title of the page (shown in tab/bookmarku)</li>
+      <li><u>tags</u> - decides which words will link to this page. space separated. u can use underscore like blood_disease and it will render converted to a space. u can have many of these as well</li>
+      <li><u>justify</u> - decides where to flow the text. possible arguments:
+        <ol>
+          <li><u>auto</u> (default) - centers if the line is short, otherwise does the block thing (inserts extra spaces until the line is 40 wide)</li>
+          <li><u>block</u> - alaways do tha block thing</li>
+          <li><u>none</u> - does nothing (except padding to 40) for ascii art or so</li>
+          <li><u>left</u> - dis is like "auto" except it shoves it to the left if short</li>
+          <li><u>center</u> - like you would on your emo blog</li>
+          <li>i might do a <u>random</u> but i might not (turns out i already did)</li>
+        </ol>
+      <li><u>curtains</u> - regarding the wavy margin matrix stuff. starts from the row used, or beginning if first row. args:
+        <ol>
+          <li><u>random</u> (default) - does any of the following:</li>
+          <li><u>glow</u> - fade from center and out</li>
+          <li><u>reverseGlow</u> - fade from outside and in</li>
+          <li><u>zigzag</u> - does some wavy shit (my fave)</li>
+          <li><u>none</u> - removes them</li>
+          <li><u>automata</u> - random 1D cellular automata (not implemented just yet. bear)</li>
+        </ol>
+      <li><u>grimes</u> - decides the griming engine (converting numbers to garbage). argimentz:
+        <ol>
+          <li><u>stable</u> (default) - randomizes one symbol per number on pageload</li>
+          <li><u>unstable</u> - randomizes every time a number appears (ofc theres still different choices for different numbers)</li>
+        </ol>
+      <li><u>curtainGrimes</u> - same but for curtains. default here is to randomize but thats not user specifiable :3</li>
+      <li><u>secret</u> - the argument will be rendered into an HTML comment on top (making it invalid html i think)</li>
+      <li>for <u>comments</u> just put whatever as the command (maybe "comment" idk)</li>
+    </ol>
+  <li>when ur done navigate to <b>your.dreamwiki.instance.com/!transpiler</b> and it'll rebuild the "database" ie. register the links and tags and shit</li>
+  <li>u can go to /!stats for a "overview" of yor tags and pages (might help)</li>
+  <li>u can put external links in the file <i>_external.txt</i> (2 b placced in /book) on the format <u>tag ----- https://addr.ess/</u> that is tag - space - five dashes - space - url.</li>
+</ol>
+<p>
+i should probably also say something about the url scheme doncha think. ok here i go
+<ul>
+  <li><b>dreamwiki.tld/motherfucker.dream</b> links to that exact page!</li>
+  <li><b>dreamwiki.tld/motherfucker</b> links to any page who's tagged with "motherfucker" (notice theres no .dream)</li>
+  <li><b>dreamwiki.tld/motherfucker.dream/shinji</b> links to any page tagged "shinji" <i>except</i> motherfucker.dream..... "from mf.dream, go to some shinji page"</li>
+  <li>these "meta" pages start with a ! ie u got <b>dreamwiki.tld/!primer</b> also !stats and !transpiler</li>
+</ul>
+
+thats it take care!!!!!!!!!!!!

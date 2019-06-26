@@ -5,6 +5,7 @@ const fs = require('fs').promises
 const helpers = require('../lib/helpers.js')
 const choice = helpers.choice
 const grimes = require('../lib/grimes.js')
+const curtains = require('../lib/curtains.js')
 const justify = require('../lib/justify.js')
 const colourScheme = require('../lib/colour.js')
 
@@ -107,6 +108,8 @@ function pagemachine (pagetext, filename) {
             justifier = justify.justifyNone
           } else if (argument === 'left') {
             justifier = justify.justifyAutoLeft
+          } else if (argument === 'block') {
+            justifier = justify.justifyBlock
           } else if (argument === 'random') {
             justifier = choice([justify.justifyBlock, justify.justifyCenter, justify.justifyNone, justify.justifyAutoLeft])
           } else {
@@ -170,7 +173,7 @@ function pagemachine (pagetext, filename) {
   // create curtains
   let outputAck = ''
   rowNumber = 0
-  let curtainer = randomCurtains()
+  let curtainer = curtains.randomCurtains()
   let curtainGrimer = grimes.randomGrimer()
   output.forEach(row => {
     curtainCommands.forEach(possibleCommand => {
@@ -178,13 +181,15 @@ function pagemachine (pagetext, filename) {
         if (possibleCommand.command === 'curtains') {
           let a = possibleCommand.argument
           if (a === 'none' || a === 'no') {
-            curtainer = noCurtains
+            curtainer = curtains.noCurtains
           } else if (a === 'glow') {
-            curtainer = glowCurtains
+            curtainer = curtains.glowCurtains
           } else if (a === 'reverseGlow') {
-            curtainer = reversedGlowCurtains
+            curtainer = curtains.reversedGlowCurtains
+          } else if (a === 'zigzag') {
+            curtainer = curtains.zigzagCurtains
           } else if (a === 'random') {
-            curtainer = randomCurtains()
+            curtainer = curtains.randomCurtains()
           }
         } else if (possibleCommand.command === 'curtainGrimes') {
           if (possibleCommand.argument === 'stable') {
@@ -247,79 +252,4 @@ function tokenType (letter) {
   if (letter.match(/[a-z_]/)) return 'lowercase'
   if (letter.match(/[A-Z_]/)) return 'uppercase'
   return 'etc'
-}
-
-function randomCurtains () {
-  return choice([glowCurtains, glowCurtains, reversedGlowCurtains, zigzagCurtains(), zigzagCurtains()])
-}
-
-function glowCurtains (grimer) {
-  let bias = Math.floor(Math.random() * 5) - 1
-  let right = ''
-  for (let i = 0; i < 10; i++) {
-    let digit = i
-    if (bias) digit = digit + bias
-    if (digit > 9) digit = 9
-    if (digit < 0) digit = 0
-    if (bias) {
-      bias += Math.floor(Math.random() * 3) - 1
-      if (bias < -1) bias = -1
-    }
-    right += '' + grimer(digit)
-  }
-  let left = right.split('').reverse().join('')
-  return { left, right }
-}
-
-function reversedGlowCurtains (grimer) {
-  let c = glowCurtains(grimer)
-  return { left: c.right, right: c.left }
-}
-
-function noCurtains () {
-  return { left: '          ', right: '          ' }
-}
-
-function zigzagCurtains () {
-  let min = 11
-  let max = 24
-  let thisTime = min + Math.floor(Math.random() * (max - min))
-  let bias = Math.floor(Math.random() * 3) - 2
-  let zag = ''
-  for (let i = 0; i < thisTime; i++) {
-    let digit = i
-    if (bias) digit = digit + bias
-    if (digit > 9) digit = 9
-    if (digit < 0) digit = 0
-    if (bias) {
-      bias += Math.floor(Math.random() * 3) - 1
-      if (bias < -1) bias = -1
-    }
-    zag += '' + digit
-  }
-  zag += zag
-
-  let maxIns = thisTime - 10 // curtains are 10 wide
-  let i = Math.floor(Math.random() * maxIns)
-  let dir = Math.floor(Math.random() * 2) === 1
-  if (i === 0) {
-    dir = false
-  } else if (i === maxIns) {
-    dir = true
-  }
-  let reversed = Math.floor(Math.random() * 2) === 1
-  return (grimer) => {
-    let returnString = grimes.grimeString(zag.substr(i, 10), grimer)
-    if (dir) {
-      i -= 1
-      if (i <= 0) dir = false
-    } else {
-      i += 1
-      if (i >= maxIns) dir = true
-    }
-
-    let rev = returnString.split('').reverse().join('')
-    if (reversed) return { left: rev, right: returnString }
-    return { left: returnString, right: rev }
-  }
 }
