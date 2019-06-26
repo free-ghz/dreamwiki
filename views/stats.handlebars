@@ -25,6 +25,18 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   </ol>
 </div>
 
+<div class="stat">
+  <h3>fractions</h3>
+  in/out ie higher up = more pages using as tag then pages linking
+  <p><span class="false">red</span> means no connection is made
+  <p>
+  <ol class="statlist">
+    {{#each fractions}}
+      <li class="{{real}} page">{{key}} ({{in}}/{{out}})</li>
+    {{/each}}
+  </ol>
+</div>
+
 <br style="clear:both;" />
 
 <!-- bazinga i dont care -->

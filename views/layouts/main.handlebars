@@ -3,7 +3,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{#if title}}{{title}}{{else}}dreamwiki!{{/if}}</title>
+    {{#if title}}
+      <title>{{title}}</title>
+      <meta property="og:title" content="{{title}}" />
+    {{else}}
+      <title>dreamwiki!</title>
+      <meta property="og:title" content="dreamwiki!" />
+    {{/if}}
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://dreamwiki.sixey.es/og.png" />
+    <meta property="og:url" content="https://dreamwiki.sixey.es/{{filename}}/" />
     <style>
       body {
         background-color:{{ colour.wall }};

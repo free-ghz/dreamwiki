@@ -206,7 +206,7 @@ function pagemachine (pagetext, filename) {
   })
 
   output = outputAck // output.join('\n')
-  return { output, title, secrets }
+  return { output, title, secrets, filename }
 }
 
 function linkExists (word, filename) {

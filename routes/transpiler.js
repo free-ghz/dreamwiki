@@ -127,6 +127,7 @@ router.route('/!transpiler/').all(async (req, res) => {
 
     // tags, ordered by how many pages use them (in their ^tags^ command)
     let tagReaches = []
+    let tagReachesLookup = []
     allIncoming.forEach(tag => {
       let reach = 0
       global.complete.forEach(page => {
@@ -134,6 +135,7 @@ router.route('/!transpiler/').all(async (req, res) => {
       })
       let real = allOutgoing.includes(tag)
       tagReaches.push({ tag, reach, real })
+      tagReachesLookup[tag] = reach
     })
     tagReaches.sort((a, b) => {
       return b.reach - a.reach
@@ -141,6 +143,7 @@ router.route('/!transpiler/').all(async (req, res) => {
 
     // links, ordered by how many pages are using them (in their text)
     let linksFired = []
+    let linksFiredLookup = {}
     allOutgoing.forEach(link => {
       let intensity = 0
       global.complete.forEach(page => {
@@ -148,15 +151,57 @@ router.route('/!transpiler/').all(async (req, res) => {
       })
       let real = allIncoming.includes(link)
       linksFired.push({ link, intensity, real })
+      linksFiredLookup[link] = intensity
     })
     linksFired.sort((a, b) => {
       return b.intensity - a.intensity
     })
 
+    // one more for good measure
+    let allKeywords = []
+    books.forEach(book => {
+      book.incoming.forEach(tag => {
+        if (!allKeywords.includes(tag)) allKeywords.push(tag)
+      })
+      book.outgoing.forEach(link => {
+        if (!allKeywords.includes(link)) allKeywords.push(link)
+      })
+    })
+    let allKeywords2 = []
+    allKeywords.forEach(key => {
+      let ob = { key, in: 0, out: 0, real: true }
+      if (linksFiredLookup[key] && typeof linksFiredLookup !== 'function') ob.out = linksFiredLookup[key] // wtf
+      if (tagReachesLookup[key] && typeof tagReachesLookup !== 'function') ob.in = tagReachesLookup[key]
+      if (ob.in === 0 || ob.out === 0) ob.real = false
+      allKeywords2.push(ob)
+    })
+    // in / out
+    allKeywords2.sort((a, b) => {
+      // div b y zero checks
+      if (b.out === 0) {
+        if (a.out === 0) {
+          // if both have zero links, order by who has the most links anyway
+          return b.in - a.in
+        }
+        return 1 // b divides by zero, deffo bigger than a
+      } else if (a.out === 0) {
+        return -1 // a deffo bigger than b, and we do b - a
+      }
+
+      // if both have 0 incoming, order by reverse outgoing i guess?
+      if (b.in === 0 && a.in === 0) {
+        return a.out - b.out // not sure
+      }
+
+      // otherwise do the fractions!
+      return (b.in / b.out) - (a.in / a.out)
+    })
+    // console.dir(allKeywords2, { 'maxArrayLength': null })
+
     let timeEnd2 = new Date().getTime()
     let time2 = timeEnd2 - timeEnd
 
-    global.stats = { tagReaches, linksFired, time, time2 }
+    global.stats = { tagReaches, linksFired, time, time2, fractions: allKeywords2 }
     fs.writeFile('./static/stats.json', JSON.stringify(global.stats), 'utf8')
 
     res.redirect('/!stats/')

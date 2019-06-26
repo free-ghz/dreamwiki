@@ -35,6 +35,7 @@ fs.readFile('./static/stats.json', 'utf8').then(text => {
 })
 
 app.use((request, response, next) => {
+  console.log(request.url)
   // här kan du ha login å sån skittt yo
   next()
 })

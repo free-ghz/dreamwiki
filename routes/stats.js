@@ -11,6 +11,7 @@ router.route('/!stats/').all(async (req, res) => {
     time2: global.stats.time2,
     tagReaches: global.stats.tagReaches,
     linksFired: global.stats.linksFired,
+    fractions: global.stats.fractions,
     bazinga }
 
   res.render('stats.handlebars', datta)

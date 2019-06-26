@@ -15,6 +15,9 @@ interlinking pages or index cards or whatever. look in `book/` for examples on w
 - 'random' should just give ya a random page instead of going through the tag system
 - password protect the "transpiler" or something
 - not sure if pages are made not to link to themselves (i think no?)
+- not comfortable having my domain in the og tags. maybe there should be a config file or something,
+    - og.png is not real
 
 # bugs
-- none that i found yet :)
+- sometimes
+- !stats doesnt work just after a !transpiler run (need server reboot). probs to do with fractions stat
