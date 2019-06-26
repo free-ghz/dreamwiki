@@ -15,6 +15,10 @@ router.route('/:dreamfile').all(pagefuck)
 router.route('/:dreamfile/:link').all((req, res) => {
   if (!linkExists(req.params.link, req.params.dreamfile)) res.redirect('/fourohfour.dream/')
   let desiredPage = findLink(req.params.link, req.params.dreamfile)
+  if (desiredPage.match(/^https?:\/\/(.*)/)) {
+    // external link
+    return res.redirect(desiredPage)
+  }
   return res.redirect('/' + desiredPage + '/')
 })
 

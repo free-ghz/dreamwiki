@@ -12,6 +12,18 @@ router.route('/!transpiler/').all(async (req, res) => {
     if (!fileName.endsWith('.dream')) return
     books.push(readBook(fileName))
   })
+
+  let externalText = await fs.readFile('./book/_external.txt', 'utf8')
+  let external = []
+  externalText.split('\n').forEach(row => {
+    if (row.indexOf(' ----- ') >= 0) {
+      let rowArr = row.split(' ----- ')
+      let tag = rowArr[0].trim()
+      let destination = rowArr[1].trim()
+      external.push({ tag, destination })
+    }
+  })
+
   // fs shit is async, + i didnt get `await Prommis.all(books)` to work?
   Promise.all(books).then(books => {
     // this time we shall cross-reference the pages and see if they link eachother
@@ -25,6 +37,15 @@ router.route('/!transpiler/').all(async (req, res) => {
               receiver.reachableFrom.add(sender.fileName)
             }
           })
+        }
+      })
+    })
+
+    // for external links (i think this is just so it shows up in stats? for a mode i didnt implement yet?)
+    books.forEach(page => {
+      external.forEach(website => {
+        if (page.outgoing.has(website.tag)) {
+          page.linksTo.add(website.destination) // linksTo is still a set at this point
         }
       })
     })
@@ -55,6 +76,14 @@ router.route('/!transpiler/').all(async (req, res) => {
           allLinks[tag] = [page.fileName]
         }
       })
+    })
+    // external pages as well!
+    external.forEach(link => {
+      if (allLinks[link.tag]) {
+        allLinks[link.tag].push(link.destination)
+      } else {
+        allLinks[link.tag] = [link.destination]
+      }
     })
 
     // ive gotten requests by myself to do this (tag -> list of pages)
