@@ -3,6 +3,7 @@ externa länkar. utan SPACE-FEM DASHES-SPACE är raden en kommentar.
 	mothership
 
 sixeyes ----- https://sixey.es
+primer ----- https://dreamwiki.sixey.es/!primer/
 
 bitcoin ----- https://sixey.es/bitcoin
 
