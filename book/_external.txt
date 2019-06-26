@@ -14,7 +14,6 @@ bitcoin ----- https://sixey.es/bitcoin
 catsounds ----- https://en.wikipedia.org/wiki/Wildcat#Communication
 tanasinn ----- http://tanasinn.org/
 aposematism ----- https://sl.wikipedia.org/wiki/Aposematizem
-eurorack_document ----- http://sixey.es:1337/nextcloud/index.php/s/VTjlBsPkAN9lqdu/download
 tape_canon ----- https://sixey.es/sounds/tapes/
 red_dragon ----- https://www.modulargrid.net/e/offers/view/26795
 

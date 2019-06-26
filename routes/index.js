@@ -200,8 +200,8 @@ function pagemachine (pagetext, filename) {
         }
       }
     })
-    let curtains = curtainer(curtainGrimer)
-    outputAck += '<span class="grime">' + curtains.left + '</span> ' + row + ' <span class="grime">' + curtains.right + '</span>\n'
+    let c = curtainer(curtainGrimer)
+    outputAck += '<span class="grime">' + c.left + '</span> ' + row + ' <span class="grime">' + c.right + '</span>\n'
     rowNumber += 1
   })
 

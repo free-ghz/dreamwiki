@@ -5,7 +5,9 @@ router.route('/!stats/').all(async (req, res) => {
   let bazinga = { allLinks: global.allLinks, allTags: global.allTags }
   bazinga = JSON.stringify(bazinga)
 
-  let datta = { layout: 'secret',
+  let datta = {
+    title: 'dw stats',
+    layout: 'secret',
     pages: global.complete.length,
     time: global.stats.time,
     time2: global.stats.time2,
