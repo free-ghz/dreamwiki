@@ -167,16 +167,16 @@ router.route('/!transpiler/').all(async (req, res) => {
         if (!allKeywords.includes(link)) allKeywords.push(link)
       })
     })
-    let allKeywords2 = []
+    let fractions = []
     allKeywords.forEach(key => {
       let ob = { key, in: 0, out: 0, real: true }
-      if (linksFiredLookup[key] && typeof linksFiredLookup !== 'function') ob.out = linksFiredLookup[key] // wtf
-      if (tagReachesLookup[key] && typeof tagReachesLookup !== 'function') ob.in = tagReachesLookup[key]
+      if (linksFiredLookup[key] && typeof linksFiredLookup[key] === 'number') ob.out = linksFiredLookup[key] // wtf
+      if (tagReachesLookup[key] && typeof tagReachesLookup[key] === 'number') ob.in = tagReachesLookup[key]
       if (ob.in === 0 || ob.out === 0) ob.real = false
-      allKeywords2.push(ob)
+      fractions.push(ob)
     })
     // in / out
-    allKeywords2.sort((a, b) => {
+    fractions.sort((a, b) => {
       // div b y zero checks
       if (b.out === 0) {
         if (a.out === 0) {
@@ -201,7 +201,7 @@ router.route('/!transpiler/').all(async (req, res) => {
     let timeEnd2 = new Date().getTime()
     let time2 = timeEnd2 - timeEnd
 
-    global.stats = { tagReaches, linksFired, time, time2, fractions: allKeywords2 }
+    global.stats = { tagReaches, linksFired, time, time2, fractions }
     fs.writeFile('./static/stats.json', JSON.stringify(global.stats), 'utf8')
 
     res.redirect('/!stats/')

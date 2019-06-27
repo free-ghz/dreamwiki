@@ -51,5 +51,6 @@ app.use((request, response, next) => {
 app.use((e, rq, rs, nx) => {
   if (e) {
     rs.status(500).send('500 lol: ' + e)
+    console.log(e)
   }
 })

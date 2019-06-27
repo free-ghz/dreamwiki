@@ -18,4 +18,3 @@ interlinking pages or index cards or whatever. look in `book/` for examples on w
 
 # bugs
 - sometimes
-- !stats doesnt work just after a !transpiler run (need server reboot). probs to do with fractions stat
