@@ -2,7 +2,7 @@
 const router = require('express').Router()
 
 router.route('/!stats/').all(async (req, res) => {
-  let bazinga = { allLinks: global.allLinks, allTags: global.allTags }
+  let bazinga = { allLinks: global.allLinks, allTags: global.allTags, pages: global.completeKeyed }
   bazinga = JSON.stringify(bazinga)
 
   let datta = {
@@ -15,6 +15,13 @@ router.route('/!stats/').all(async (req, res) => {
     linksFired: global.stats.linksFired,
     fractions: global.stats.fractions,
     bazinga }
+
+  // we should have processor cycles for ONE sort dontcha think
+  let wew = global.complete
+  wew.sort((a, b) => {
+    return a.incoming - b.incoming // largest one last
+  })
+  datta.allPages = wew
 
   res.render('stats.handlebars', datta)
 })
