@@ -1,3 +1,5 @@
+import { linkSync } from "fs";
+
 // i'm gonna add event listeners to like 5000 nodes
 let width = document.documentElement.clientWidth
 let height = document.documentElement.clientHeight
@@ -5,6 +7,7 @@ let body = document.querySelector('body')
 let li = document.querySelectorAll('li.page')
 let allLinks = bazinga.allLinks // bazinga
 let allTags = bazinga.allTags
+let keyed = bazinga.completeKeyed
 console.log(allLinks)
 let boxes = []
 li.forEach(link => {
@@ -46,6 +49,11 @@ function boxdims (box, mx, my) {
 }
 
 function createBox (link) {
+  if (link.classList.includes('fey')) {
+    console.log('fey')
+  } else if (link.classList.contains('fey')) {
+    console.log('bs')
+  }
   let actualLink = link.innerHTML.split(' ')[0].trim()
   let box = document.createElement('div')
 
