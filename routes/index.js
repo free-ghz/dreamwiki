@@ -187,9 +187,11 @@ function pagemachine (pagetext, filename) {
           } else if (a === 'reverseGlow') {
             curtainer = curtains.reversedGlowCurtains
           } else if (a === 'zigzag') {
-            curtainer = curtains.zigzagCurtains
+            curtainer = curtains.zigzagCurtains()
           } else if (a === 'random') {
             curtainer = curtains.randomCurtains()
+          } else if (a === 'undefined') {
+            curtainer = curtains.undefinedCurtains
           }
         } else if (possibleCommand.command === 'curtainGrimes') {
           if (possibleCommand.argument === 'stable') {

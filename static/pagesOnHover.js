@@ -1,4 +1,4 @@
-import { linkSync } from "fs";
+'use strict'
 
 // i'm gonna add event listeners to like 5000 nodes
 let width = document.documentElement.clientWidth
@@ -8,7 +8,6 @@ let li = document.querySelectorAll('li.page')
 let allLinks = bazinga.allLinks // bazinga
 let allTags = bazinga.allTags
 let keyed = bazinga.completeKeyed
-console.log(allLinks)
 let boxes = []
 li.forEach(link => {
   link.addEventListener('mouseenter', event => {
@@ -37,7 +36,6 @@ li.forEach(link => {
     }
   })
 })
-console.log('foreach')
 
 function boxdims (box, mx, my) {
   let space = 10
@@ -49,7 +47,7 @@ function boxdims (box, mx, my) {
 }
 
 function createBox (link) {
-  if (link.classList.includes('fey')) {
+  if (link.classList.contains('fey')) {
     console.log('fey')
   } else if (link.classList.contains('fey')) {
     console.log('bs')
