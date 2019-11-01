@@ -1,5 +1,5 @@
 # dreamwiki
-mmm.  
+mmmh.  
   
 garden of associative thought slurry # .,.-:^¤%¶#  
 combined field notes-carefully grown
@@ -15,6 +15,8 @@ interlinking pages or index cards or whatever. look in `book/` for examples on w
 - password protect the "transpiler" or something
 - not sure if pages are made not to link to themselves (i think no?)
 - not comfortable having my domain in the og tags. maybe there should be a config file or something,
+- refactor page generation, because it's what i deserve
+- todo tags and a !todos page which lists em
 
 # bugs
 - sometimes
