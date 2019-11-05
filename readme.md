@@ -7,7 +7,6 @@ combined field notes-carefully grown
 interlinking pages or index cards or whatever. look in `book/` for examples on what they look like unprocessed
 
 # todo
-- stats: pages and their ins and outs
 - cellular automata
 - caps dance
 - grimes stable per row?

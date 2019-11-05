@@ -4,10 +4,13 @@
 let width = document.documentElement.clientWidth
 let height = document.documentElement.clientHeight
 let body = document.querySelector('body')
-let li = document.querySelectorAll('li.page')
+let li = document.querySelectorAll('li')
 let allLinks = bazinga.allLinks // bazinga
 let allTags = bazinga.allTags
 let keyed = bazinga.completeKeyed
+
+// add the little black boxes where we put links later,
+// make sure they move when the mouse is moved.
 let boxes = []
 li.forEach(link => {
   link.addEventListener('mouseenter', event => {
@@ -18,6 +21,9 @@ li.forEach(link => {
     body.appendChild(box)
     boxes.push(box)
   })
+  // yep, every link on the page listens for mouse movement,
+  // and sets every boxes position according to that.
+  // should work out if you only hover over one link at a time
   link.addEventListener('mousemove', event => {
     if (boxes.length > 0) {
       boxes.forEach(box => {
@@ -27,6 +33,8 @@ li.forEach(link => {
       })
     }
   })
+  // remove every box. there should never be more than one,
+  // but you never know.
   link.addEventListener('mouseleave', event => {
     if (boxes.length > 0) {
       boxes.forEach(box => {
@@ -46,13 +54,19 @@ function boxdims (box, mx, my) {
   return { x, y }
 }
 
+// decide which box to create depending on what type of
+// link thats hovered
+
 function createBox (link) {
-  if (link.classList.contains('fey')) {
-    console.log('fey')
-  } else if (link.classList.contains('fey')) {
-    console.log('bs')
-  }
-  let actualLink = link.innerHTML.split(' ')[0].trim()
+    if (link.classList.contains('page')) {
+        return createPageBox(link) // for the first four panes (links/tags)
+    } else {
+        return createFeyBox(link) // for the last pane (pages)
+    }
+}
+
+function createPageBox (link) {
+  let actualLink = link.getAttribute('data-link')
   let box = document.createElement('div')
 
   if (allTags[actualLink]) {
@@ -70,6 +84,42 @@ function createBox (link) {
     let ul = document.createElement('div')
     ul.classList.add('targets')
     allLinks[actualLink].forEach(target => {
+      let li = document.createElement('span')
+      li.innerText = target
+      ul.appendChild(li)
+    })
+    box.appendChild(ul)
+  }
+
+  let br = document.createElement('br')
+  br.style.clear = 'both'
+  box.appendChild(br)
+  box.classList.add('bawrks')
+  return box
+}
+
+// this one might be a lil trickeir
+function createFeyBox (link) {
+  let pageName = link.getAttribute('data-page')
+  let box = document.createElement('div')
+
+  let reachableFrom = bazinga.pages[pageName].reachableFrom
+  if (reachableFrom && reachableFrom.length > 0) {
+    let ul = document.createElement('div')
+    ul.classList.add('sources')
+    reachableFrom.forEach(target => {
+      let li = document.createElement('span')
+      li.innerText = target
+      ul.appendChild(li)
+    })
+    box.appendChild(ul)
+  }
+
+  let linksTo = bazinga.pages[pageName].linksTo
+  if (linksTo && linksTo.length > 0) {
+    let ul = document.createElement('div')
+    ul.classList.add('targets')
+    linksTo.forEach(target => {
       let li = document.createElement('span')
       li.innerText = target
       ul.appendChild(li)

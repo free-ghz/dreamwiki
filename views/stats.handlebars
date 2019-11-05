@@ -8,7 +8,7 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   <p>
   <ol class="statlist">
     {{#each tagReaches}}
-      <li class="{{real}} page">{{tag}} ({{reach}})</li>
+      <li class="{{real}} page" data-link="{{tag}}">{{tag}} ({{reach}})</li>
     {{/each}}
   </ol>
 </div>
@@ -20,7 +20,7 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   <p>
   <ol class="statlist">
     {{#each linksFired}}
-      <li class="{{real}} page">{{link}} ({{intensity}})</li>
+      <li class="{{real}} page" data-link="{{link}}">{{link}} ({{intensity}})</li>
     {{/each}}
   </ol>
 </div>
@@ -32,7 +32,7 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   <p>
   <ol class="statlist">
     {{#each fractions}}
-      <li class="{{real}} page">{{key}} ({{in}}/{{out}})</li>
+      <li class="{{real}} page" data-link="{{key}}">{{key}} ({{in}}/{{out}})</li>
     {{/each}}
   </ol>
 </div>
@@ -44,7 +44,7 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   <p>
   <ol class="statlist">
     {{#each allPages}}
-      <li class="fey">{{fileName}} &lt;{{title}}&gt;</li>
+      <li class="fey" data-page="{{fileName}}">{{fileName}} &lt;{{title}}&gt;</li>
     {{/each}}
   </ol>
 </div>
