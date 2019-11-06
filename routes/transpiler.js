@@ -98,6 +98,22 @@ router.route('/!transpiler/').all(async (req, res) => {
       })
     })
 
+    // find all todo's and add them to dict
+    let todos = []
+    books.forEach(page => {
+        if (page.todos && page.todos.length > 0) {
+            let pageTodos = {
+                fileName: page.fileName,
+                todos: []
+            }
+            page.todos.forEach(todo => {
+                pageTodos.todos.push(todo)
+            })
+            todos.push(pageTodos)
+        }
+    })
+    console.log(todos)
+
     let timeEnd = new Date().getTime()
     let time = timeEnd - timeBegin
 
@@ -105,10 +121,12 @@ router.route('/!transpiler/').all(async (req, res) => {
     global.completeKeyed = completeKeyed
     global.allLinks = allLinks
     global.allTags = allTags
+    global.todos = todos
     fs.writeFile('./static/complete.json', JSON.stringify(complete), 'utf8')
     fs.writeFile('./static/completeKeyed.json', JSON.stringify(completeKeyed), 'utf8')
     fs.writeFile('./static/allLinks.json', JSON.stringify(allLinks), 'utf8')
     fs.writeFile('./static/allTags.json', JSON.stringify(allTags), 'utf8')
+    fs.writeFile('./static/todos.json', JSON.stringify(todos), 'utf8')
 
     /*
       also build the stats here i guess!
@@ -210,12 +228,15 @@ router.route('/!transpiler/').all(async (req, res) => {
 
 module.exports = router
 
+// read a "book" (more like a page) into a lil structure
+// basically - parse commands to find links and such
 async function readBook (fileName) {
   let incoming = new Set()
   let outgoing = new Set()
   let content = await fs.readFile('./book/' + fileName, 'utf8')
   let rows = content.split('\n')
   let title = '(undefined)'
+  let todos = []
   rows.forEach(row => {
     if (row.startsWith('^')) {
       let split = row.split('^')
@@ -226,6 +247,8 @@ async function readBook (fileName) {
         })
       } else if (split[1].includes('title')) {
         title = split[2].trim()
+      } else if (split[1].includes('todo')) {
+        todos.push(split[2].trim())
       }
     } else {
       let row2 = row.replace(/[^a-zA-Z_]+/g, ' ')
@@ -243,5 +266,5 @@ async function readBook (fileName) {
       })
     }
   })
-  return { incoming, outgoing, fileName, title, linksTo: new Set(), reachableFrom: new Set() }
+  return { incoming, outgoing, fileName, title, linksTo: new Set(), reachableFrom: new Set(), todos }
 }

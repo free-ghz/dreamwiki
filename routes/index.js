@@ -137,7 +137,7 @@ function pagemachine (pagetext, filename) {
         }
       } else {
         // comment
-        console.log(row)
+        // console.log(row)
       }
       return
     }

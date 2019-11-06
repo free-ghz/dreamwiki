@@ -15,6 +15,7 @@ router.route('/!stats/').all(async (req, res) => {
     tagReaches: global.stats.tagReaches,
     linksFired: global.stats.linksFired,
     fractions: global.stats.fractions,
+    todos: global.todos,
     bazinga }
 
   // we should have processor cycles for ONE sort dontcha think

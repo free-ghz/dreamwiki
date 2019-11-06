@@ -52,6 +52,20 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
 
 <br style="clear:both;" />
 
+<h2>Todo</h2>
+<ul>
+    {{#each todos}}
+        <li>{{fileName}}:
+            <ul>
+                {{#each todos}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </li>
+    {{/each}}
+</ul>
+
+
 <!-- bazinga i dont care -->
 <script>
   let bazinga = JSON.parse(atob('{{{bazinga}}}'));

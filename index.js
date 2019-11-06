@@ -33,6 +33,10 @@ fs.readFile('./static/stats.json', 'utf8').then(text => {
   global.stats = JSON.parse(text)
   console.log('read stats.json')
 })
+fs.readFile('./static/todos.json', 'utf8').then(text => {
+  global.todos = JSON.parse(todos)
+  console.log('read todos.json')
+})
 
 app.use((request, response, next) => {
   console.log(request.url)
