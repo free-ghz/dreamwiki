@@ -6,7 +6,7 @@ sixeyes ----- https://sixey.es
 primer ----- https://dreamwiki.sixey.es/!primer/
 
 bitcoin ----- https://sixey.es/bitcoin
-
+teleborg ----- https://sixey.es/imagery/maps/teleborg.html
 
 
 
@@ -17,8 +17,8 @@ tanasinn ----- http://tanasinn.org/
 aposematism ----- https://sl.wikipedia.org/wiki/Aposematizem
 tape_canon ----- https://sixey.es/sounds/tapes/
 red_dragon ----- https://www.modulargrid.net/e/offers/view/26795
-eurorack_document ----- https://vvvvvv.sixey.es/index.php/s/s7gpWqRK7XRq8td
-
+eurorack_dobument ----- https://vvvvvv.sixey.es/index.php/s/s7gpWqRK7XRq8td
+kulturbilder_on_wordpress ----- https://kulturbilder.wordpress.com/
 
 
 	ord som inte finns, googlesearch
