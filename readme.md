@@ -12,8 +12,6 @@ colourful projector of interlinking pages or index cards or whatever. look in `b
 - grimes stable per row?
 - 'random' should just give ya a random page instead of going through the tag system
 - password protect the "transpiler" or something
-- not sure if pages are made not to link to themselves (i think no?)
-- refactor page generation, because it's what i deserve
 - global config
   - page width?
   - curtain width?
@@ -27,6 +25,6 @@ colourful projector of interlinking pages or index cards or whatever. look in `b
 - sometimes
 
 ## also
-transpile should be called "commit"
+transpile should be called "commit"  
 og means open graph
 

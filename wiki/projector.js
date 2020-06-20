@@ -50,7 +50,7 @@ class Projector {
             output += ' '.repeat(40)
             output += ` <span class="grime">${curtains.right}</span>\n`
         }
-        
+
         this.output = output
     }
 
@@ -135,13 +135,6 @@ class Projector {
         if (!global.allLinks[word.toLowerCase()]) return false
         if (filename && global.allLinks[word.toLowerCase()].length === 1 && global.allLinks[word.toLowerCase()][0] === filename) return false
         return true
-    }
-  
-    findLink(link, verboten) {
-        do {
-            var desiredPage = choice(global.allLinks[link.toLowerCase()])
-        } while (verboten && desiredPage === verboten)
-        return desiredPage
     }
 }
 
