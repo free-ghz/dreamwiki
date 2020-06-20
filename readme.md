@@ -1,10 +1,10 @@
 # dreamwiki
-mmmh.  
+welcome in the thing  
   
-garden of associative thought slurry # .,.-:^¤%¶#  
-combined field notes-carefully grown
+garden of associative thought slurry, like so:  .,.-:^¤%¶#  
+combined field notes - carefully grown
 
-interlinking pages or index cards or whatever. look in `book/` for examples on what they look like unprocessed
+colourful projector of interlinking pages or index cards or whatever. look in `book/` for examples on what they look like unprocessed
 
 # todo
 - cellular automata
@@ -13,8 +13,15 @@ interlinking pages or index cards or whatever. look in `book/` for examples on w
 - 'random' should just give ya a random page instead of going through the tag system
 - password protect the "transpiler" or something
 - not sure if pages are made not to link to themselves (i think no?)
-- not comfortable having my domain in the og tags. maybe there should be a config file or something,
 - refactor page generation, because it's what i deserve
+- global config
+  - page width?
+  - curtain width?
+  - grime pools
+  - open graph stuff
+  - port
+  - host? do we need it?
+
 
 # bugs
 - sometimes
