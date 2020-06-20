@@ -62,10 +62,10 @@ async function pagefuck (req, res) {
 
   // let page = pagemachine(pagetext, dreamfile)
   let page = {
-    output: projector.render(),
     title: pageObj.title,
-    secrets: [],
-    filename: pageObj.filename
+    filename: pageObj.filename,
+    secrets: projector.secrets,
+    output: projector.output
   }
   page.colour = colourScheme()
 
