@@ -2,7 +2,6 @@
 
 class Page {
     constructor(data) {
-        console.log(data)
         this.title = data.title
         this.filename = data.filename
         this.textRows = data.textRows

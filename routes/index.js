@@ -8,7 +8,9 @@ const grimes = require('../lib/grimes.js')
 const curtains = require('../lib/curtains.js')
 const justify = require('../lib/justify.js')
 const colourScheme = require('../lib/colour.js')
+
 const Page = require('../wiki/page')
+const Projector = require('../wiki/projector')
 
 router.route('/').all((req, res) => {
   return res.redirect('/welcome.dream/')
@@ -56,8 +58,15 @@ async function pagefuck (req, res) {
   if (pagetext === undefined) return
 
   let pageObj = Page.readFromPage(pagetext, dreamfile)
+  let projector = new Projector(pageObj)
 
-  let page = pagemachine(pagetext, dreamfile)
+  // let page = pagemachine(pagetext, dreamfile)
+  let page = {
+    output: projector.render(),
+    title: pageObj.title,
+    secrets: [],
+    filename: pageObj.filename
+  }
   page.colour = colourScheme()
 
   return res.render('page.handlebars', page)
