@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const porttu = 7004
 const fs = require('fs').promises
+const Transpiler = require('./wiki/transpiler')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -13,29 +14,31 @@ app.engine('handlebars', hbars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.listen(porttu, () => { console.log('röjar ralf på port', porttu) })
 
-fs.readFile('./static/complete.json', 'utf8').then(text => {
-  global.complete = JSON.parse(text)
-  console.log('read complete.json')
-})
-fs.readFile('./static/completeKeyed.json', 'utf8').then(text => {
-  global.completeKeyed = JSON.parse(text)
-  console.log('read completeKeyed.json')
-})
-fs.readFile('./static/allLinks.json', 'utf8').then(text => {
-  global.allLinks = JSON.parse(text)
-  console.log('read allLinks.json')
-})
-fs.readFile('./static/allTags.json', 'utf8').then(text => {
-  global.allTags = JSON.parse(text)
-  console.log('read allTags.json')
-})
-fs.readFile('./static/stats.json', 'utf8').then(text => {
-  global.stats = JSON.parse(text)
-  console.log('read stats.json')
-})
-fs.readFile('./static/todos.json', 'utf8').then(text => {
-  global.todos = JSON.parse(todos)
-  console.log('read todos.json')
+// Read "offline" storage
+const jsonColdStorage = [
+  'complete',
+  'completeKeyed',
+  'allLinks',
+  'allTags',
+  'stats',
+  'todos'
+]
+let needsUpdate = false
+let index = 0
+jsonColdStorage.forEach(async (variable) => {
+  let filename = `./static/${variable}.json`
+  await fs.readFile(filename, 'utf8').then(text => {
+    global[variable] = JSON.parse(text)
+    console.log(`read ${filename}`)
+  }).catch(async err => {
+    console.log(`couldn't read ${filename} - it will be created.`)
+    needsUpdate = true
+  })
+  if (needsUpdate && index === jsonColdStorage.length - 1) {
+    let transpiler = new Transpiler()
+    transpiler.parseBooks()
+  }
+  index += 1
 })
 
 app.use((request, response, next) => {
