@@ -6,7 +6,7 @@ combined field notes - carefully grown
 
 colourful projector of interlinking pages or index cards or whatever. look in `book/` for examples on what they look like unprocessed
 
-![logo](https://dreamwiki.sixey.es/drw-smaller-trans.png)
+![logo](https://raw.githubusercontent.com/free-ghz/dreamwiki/master/static/drw-smaller-trans.png "logo")
 
 ## demo
 
