@@ -26,6 +26,7 @@ router.route('/:dreamfile/:link').all((req, res) => {
 module.exports = router
 
 async function pagefuck (req, res) {
+  if (req.url.includes('..')) return req.next()
   if (req.url.includes('.') && !req.url.includes('.dream')) return req.next()
 
   // first of all, this is important bc of the url scheme

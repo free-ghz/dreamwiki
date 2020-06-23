@@ -6,6 +6,14 @@ combined field notes - carefully grown
 
 colourful projector of interlinking pages or index cards or whatever. look in `book/` for examples on what they look like unprocessed
 
+![logo](https://dreamwiki.sixey.es/drw-smaller-trans.png)
+
+## demo
+
+check it out on https://dreamwiki.sixey.es/
+
+read the official documentation on https://dreamwiki.sixey.es/!primer
+
 # todo
 - cellular automata
 - caps dance
