@@ -16,7 +16,7 @@ class Projector {
         // randomize a default
         this.grimer = grimes.grimerFor('stable')
         this.curtains = curtains.curtainsFor('random', this.grimer)
-        this.justifier = justify.justifierFor('center')
+        this.justifier = justify.justifierFor('auto')
 
         // override it if there's something on row 0
         this.runCommandsForRow(0)
