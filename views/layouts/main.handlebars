@@ -49,5 +49,14 @@
     {{{body}}}
     <br style="clear:both;" />
     </main>
+    <script>
+      let main = document.querySelector('main')
+      let dreamHeight = main.clientHeight
+      let eyeHeight = document.documentElement.clientHeight
+      if (dreamHeight < (eyeHeight - 40)) {
+        let prism = (eyeHeight - dreamHeight) / 2
+        main.style.marginTop = `${prism}px`
+      }
+    </script>
 </body>
 </html>
