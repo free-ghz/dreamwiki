@@ -78,9 +78,9 @@ function linkExists (word) {
 // links to verboten if not possible.
 function findLink (link, verboten) {
   let candidates = global.allLinks[link.toLowerCase()]
-  console.log("findlink verboten", verboten, "candidates", candidates)
+  console.log("findlink", link, "from", verboten, "candidates", candidates)
   if (candidates.length === 1 && candidates[0] == verboten) {
-    console.log('returning verboten!', verboten)
+    console.log('returning identity!', verboten)
     return verboten
   }
   do {
