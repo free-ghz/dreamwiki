@@ -15,7 +15,6 @@ check it out on https://dreamwiki.sixey.es/
 read the official documentation on https://dreamwiki.sixey.es/!primer
 
 # todo
-- cellular automata
 - caps dance
 - grimes stable per row?
 - 'random' should just give ya a random page instead of going through the tag system
