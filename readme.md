@@ -31,6 +31,8 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 # bugs
 - sometimes
 
+- doesn't vibe with words longer than 40 chars (might be independently true of all adjustment variants)
+
 ## also
 transpile should be called "commit"  
 og means open graph

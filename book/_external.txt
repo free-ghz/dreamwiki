@@ -17,7 +17,7 @@ tanasinn ----- http://tanasinn.org/
 aposematism ----- https://sl.wikipedia.org/wiki/Aposematizem
 tape_canon ----- https://sixey.es/sounds/tapes/
 red_dragon ----- https://www.modulargrid.net/e/offers/view/26795
-eurorack_dobument ----- https://vvvvvv.sixey.es/index.php/s/s7gpWqRK7XRq8td
+eurorack_document ----- https://vvvvvv.sixey.es/index.php/s/s7gpWqRK7XRq8td
 kulturbilder_on_wordpress ----- https://kulturbilder.wordpress.com/
 
 
@@ -32,13 +32,14 @@ ambifractous ----- https://www.google.se/search?q=ambifractous&ie=utf-8&oe=utf-8
 
 gijs_gieskes ----- http://gieskes.nl/
 porpentine ----- http://slimedaughter.com/
-loren_schmidt ----- http://vacuumflowers.com/
+loren_schmidt -(domain jacked)- http://vacuumflowers.com/
+loren_schmidt ----- https://twitter.com/lorenschmidt/
 manne_moquist ----- http://blandsaft.com
-aanaaanaaanaaana ----- http://aanaaanaaanaaana.net/
+aanaaanaaanaaana -(domain jacked)- http://aanaaanaaanaaana.net/
 synkretie ----- https://www.synkretie.net/
 dryad_technology ----- http://dryad.technology/
 magnus_myrtveit ----- http://www.magnusmyrtveit.com/
-transformer_di_roboter ----- http://www.transformerdiroboter.com/index2.html
+transformer_di_roboter ----- http://www.transformerdiroboter.com/
 harmony_zone ----- http://harmonyzone.org/
 ixt ----- https://ff4500.red/
 ciat_lonbarde ----- http://ciat-lonbarde.net/
@@ -69,7 +70,9 @@ tin ----- https://en.wikipedia.org/wiki/Isotopes_of_tin
 NUMBER_OF_ELECTRONS_IN_EACH_SHELL ----- https://en.wikipedia.org/wiki/Electron_shell#Number_of_electrons_in_each_shell
 island_of_stability ----- https://en.wikipedia.org/wiki/Island_of_stability
 nudat ----- https://www.nndc.bnl.gov/nudat2/reColor.jsp?newColor=t12
-
+ug_programm ----- https://www.ug-programm.com/
+this_fursona_does_not_exist ----- https://thisfursonadoesnotexist.com/
+orca_language ----- https://github.com/hundredrabbits/Orca
 
 
 
