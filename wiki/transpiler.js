@@ -81,10 +81,11 @@ class Transpiler {
             })
             // external pages as well!
             external.forEach(link => {
-                if (allLinks[link.tag]) {
-                    allLinks[link.tag].push(link.destination)
+                let lowerTag = link.tag.toLowerCase();
+                if (allLinks[lowerTag]) {
+                    allLinks[lowerTag].push(link.destination)
                 } else {
-                    allLinks[link.tag] = [link.destination]
+                    allLinks[lowerTag] = [link.destination]
                 }
             })
 
