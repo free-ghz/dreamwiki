@@ -73,6 +73,7 @@ nudat ----- https://www.nndc.bnl.gov/nudat2/reColor.jsp?newColor=t12
 ug_programm ----- https://www.ug-programm.com/
 this_fursona_does_not_exist ----- https://thisfursonadoesnotexist.com/
 orca_language ----- https://github.com/hundredrabbits/Orca
+map_of_milky_way ----- http://gruze.org/galaxymap/map_2020/
 
 
 
