@@ -19,6 +19,7 @@ tape_canon ----- https://sixey.es/sounds/tapes/
 red_dragon ----- https://www.modulargrid.net/e/offers/view/26795
 eurorack_document ----- https://vvvvvv.sixey.es/index.php/s/s7gpWqRK7XRq8td
 kulturbilder_on_wordpress ----- https://kulturbilder.wordpress.com/
+glittery_furry_sticker ----- https://sixey.es/imagery/art2/screams/dreamsticker.png
 
 
 	ord som inte finns, googlesearch
