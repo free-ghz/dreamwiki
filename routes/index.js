@@ -4,7 +4,6 @@ const fs = require('fs').promises
 
 const helpers = require('../lib/helpers.js')
 const choice = helpers.choice
-const colourScheme = require('../lib/colour.js')
 
 const Page = require('../wiki/page')
 const Projector = require('../wiki/projector')
@@ -63,7 +62,7 @@ async function pagefuck (req, res) {
     filename: page.filename,
     secrets: projector.secrets,
     output: projector.output,
-    colour: colourScheme()
+    colour: projector.colourScheme
   }
 
   return res.render('page.handlebars', pageData)

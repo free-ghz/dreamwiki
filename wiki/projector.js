@@ -1,12 +1,12 @@
 'use strict'
 
 const helpers = require('../lib/helpers.js')
-const choice = helpers.choice
 
 const grimes = require('../lib/grimes.js')
 const curtains = require('../lib/curtains.js')
 const justify = require('../lib/justify.js')
 const caps = require('../lib/caps.js')
+const colour = require('../lib/colour.js')
 
 class Projector {
     constructor(page) {
@@ -19,6 +19,7 @@ class Projector {
         this.curtains = curtains.curtainsFor('random', this.grimer)
         this.justifier = justify.justifierFor('auto')
         this.caps = caps.capsFor('random')
+        this.colourScheme = colour.randomScheme()
 
         // override it if there's something on row 0
         this.runCommandsForRow(0)
@@ -69,6 +70,9 @@ class Projector {
             }
             if (command.command === 'caps') {
                 this.caps = caps.capsFor(command.params)
+            }
+            if (command.command === 'colour') {
+                this.colourScheme = colour.schemeFromHex(command.params)
             }
             if (command.command === 'secret') {
                 this.secrets.push(command.params)
