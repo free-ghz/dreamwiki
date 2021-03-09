@@ -6,6 +6,7 @@ const choice = helpers.choice
 const grimes = require('../lib/grimes.js')
 const curtains = require('../lib/curtains.js')
 const justify = require('../lib/justify.js')
+const caps = require('../lib/caps.js')
 
 class Projector {
     constructor(page) {
@@ -17,6 +18,7 @@ class Projector {
         this.grimer = grimes.grimerFor('stable')
         this.curtains = curtains.curtainsFor('random', this.grimer)
         this.justifier = justify.justifierFor('auto')
+        this.caps = caps.capsFor('random')
 
         // override it if there's something on row 0
         this.runCommandsForRow(0)
@@ -65,6 +67,9 @@ class Projector {
             if (command.command === 'justify' || command.command === 'align') {
                 this.justifier = justify.justifierFor(command.params)
             }
+            if (command.command === 'caps') {
+                this.caps = caps.capsFor(command.params)
+            }
             if (command.command === 'secret') {
                 this.secrets.push(command.params)
             }
@@ -86,7 +91,8 @@ class Projector {
 
             let wordlink = this.linkExists(token.token, this.page.filename)
             let capsOrNot = ''
-            let tokenDisplay = token.token.replace(/_/g, ' ').toUpperCase()
+            let tokenDisplay = token.token.replace(/_/g, ' ')
+            tokenDisplay = this.caps(tokenDisplay)
             if (token.type === 'uppercase') {
                 capsOrNot = 'class="link"'
             }
