@@ -32,6 +32,8 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 
 - doesn't vibe with words longer than 40 chars (might be independently true of all adjustment variants)
 
+- titlecase caps treats composite_links as one word, only capitalizing first letter of whole token
+
 ## also
 transpile should be called "commit"  
 og means open graph
