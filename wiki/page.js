@@ -10,7 +10,7 @@ class Page {
     }
 
     static readFromPage(text, filename) {
-        let rows = text.split('\n')
+        let rows = text.split(/\r?\n/)
         let textRows = []
         let commandRows = []
         let rowNumber = 0
