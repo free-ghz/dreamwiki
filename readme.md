@@ -34,6 +34,8 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 
 - titlecase caps treats composite_links as one word, only capitalizing first letter of whole token
 
+- titlecase caps treats PARTial links as two words, capitalizing it like `PartIal`
+
 ## also
 transpile should be called "commit"  
 og means open graph

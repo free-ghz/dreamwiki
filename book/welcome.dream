@@ -1,31 +1,18 @@
+^ curtains ^ none ^
 ^ tags ^ welcome meta readme dreamwiki hello ^
 ^ title ^ welcome to dreamwiki ^
-
-welcome to
-dream wiki
-9
-6
-^ justify ^ no ^
-0000011122233445678998765443322211100000
-0                                      0
-0 garden of associative thought slurry 0
-0                                      0
-0 combined field notes-carefully grown 0
-0                                      0
-0000011122233445678998765443322211100000
-^ justify ^ auto ^
-6
-7
-9
-9
-
-^ justify ^ center ^
-for a DREAM wiki it's not really about
-dreams just yet... or ever.
-and it's probably not a wiki, either.
-
-8
-^ justify ^ no ^
+^ align ^ none ^
+     000001111111111222222222233333     
+ 00000000111111111222222222333333333444 
+0000000011111111222222223333333344444444
+0000000111111122222223333333444444455555
+0000001111112222223333334444445555556666
+0000011111222223333344444555556666677777
+0000111122223333444455556666777788889999
+0001112223334445556667778889999
+00112233445566778899
+0123456789
+^ justifys ^ center ^
 
 ANIMALs 6 who roams the kirugu night?
  PLANTs 7 how is reality kept together?
@@ -37,16 +24,14 @@ REPORTS 7 stories from the field.
 
   CAVEs 6 the crystal hatching grounds.
   SLEEP 7 the final frontier!
-
-^ justify ^ center ^
-9
-^ justify ^ no ^
-0000011122233445678998765443322211100000
-0                                      0
-0   PRIMER   9   ABOUT   9   RANDOM    0
-0                                      0
-0000011122233445678998765443322211100000
-^ justify ^ center ^
-9
-if nothing else, have a SYNTH_VIDEO
-or go to the SIXEYES mothership
+^ justifys ^ none ^
+                              9876543210
+                    99887766554433221100
+         9999888777666555444333222111000
+9999888877776666555544443333222211110000
+7777766666555554444433333222221111100000
+6666555555444444333333222222111111000000
+5555544444443333333222222211111110000000
+4444444433333333222222221111111100000000
+ 44433333333322222222211111111100000000 
+     333332222222222111111111100000     
