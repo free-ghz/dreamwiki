@@ -1,5 +1,6 @@
 ^ title ^ electric machines ^
-^ tags ^ electricity circuit circuits computer ^
+^ tags ^ electricity circuit circuits computer computers tech component components ^
+^ tags ^ resistor resistors capacitor capacitors lodestone lodestones diode diodes wire ^
 
 9parts9 9of9 9the9 9electric9 9computer9
 
@@ -9,4 +10,28 @@
 8 the RESISTor 8
 it resists electricity. it can be good or bad at this and this property is measured in 9ohms9. resistors practice APOSEMATISM, showing with colours how dangerous they are.
 
-^ todo ^ continue. some real ones and some made up ^
+8 the CAPACITOR 8
+this is an ephemeral BATTERY and voltage multiplier, used for load balancing and for defence.
+
+8 the LODESTONE 8
+stores a position in a magnetic field and outputs electricity when moving closer or further from it.
+
+8 the schottky DIODE 8
+this component limits the flow of electricity through itself to go in one direction only.
+
+8 the mustelid probe 8
+measures distance to (uncloaked) FERRETS.
+
+8the cat wire 8
+a wire used to connect machines and appliances to each other.
+
+8 the SLOWER 8
+slows down the operation of a circuit
+
+8 the furnace 8
+exports daemon energy through. some kind of hole
+
+9999 9999 9999
+
+
+not covered: water circuits (see my post on submerging a magic spell in water for details about how to implement them)

@@ -21,8 +21,8 @@ comes in different flavours.
 9 make up the "wandering food supply"  9
 9 used by the shamans and underlings   9
   of KIRUGU_VARGIR. when called upon,
-  they present themselves, ready to be
-  eaten.
+  they present themselves, and can be
+  caught.
 
 ^ justify ^ auto ^
 88888888888888 the MARTEN 88888888888888
@@ -32,7 +32,9 @@ comes in different flavours.
 9 often used for spying, or stealing.  9
 9 in the older tales about VIDMI,      9
   these are probs the ferrets that she
-  was said to control.
+  was said to control. this connection
+  might explain why many denizens have
+  this as their main "pet" god.
 
 ^ justify ^ auto ^
 88888888888888 the ERMINE 88888888888888
@@ -40,5 +42,35 @@ comes in different flavours.
 8                                      8
 8 the lusher one in the family is the  8
 9 ermine. used as bedwarmers, or       9
-9 harvested for their beautiful fur.   9
-^ todo ^ flesh out, tone down fetish stuff ^
+9 harvested for their beautiful fur,   9
+  the white coat, very pretty,
+  although rare.
+^ secret ^ vore-ferrets, lurer-ferrets, the luster-ferrets ^
+
+^ justify ^ auto ^
+888888888888888 the MEWN 888888888888888
+^ justify ^ no ^
+8                                      8
+9 one of the most notable in kirugu    9
+9 lore, the otter ferret? it goes in   9
+  RIVERs. there are a lot of ferrets,
+  but for some reason, this otter one
+  is hardly ever seen. it might be
+  that it is unbound...?
+  locals use it for sport fishing.
+
+^ justify ^ auto ^
+888888888888888 the HUSKY 88888888888888
+^ justify ^ no ^
+8                                      8
+9 the husky may seem like a DOG, but   9
+9 it is actually a kind of ferret.     9
+  this makes it the largest of the
+  phylum, and it's the most recently
+  evolved as well, bred for use as a
+  predator. it's made more dangerous
+  by the fact that it's almost
+  completely unknown to BIOLOGISTs.
+^ secret ^ according to the archeology, there was a huge set of sub species ^
+^ secret ^ the ermine was usually associated with the sun god ^
+^ secret ^ a sort of rat. looked after by priestesses of KIRUGU_VARGIR for their "therapy." (made into haute cuisine) ^
