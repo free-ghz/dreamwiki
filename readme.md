@@ -36,6 +36,8 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 
 - titlecase caps treats PARTial links as two words, capitalizing it like `PartIal`
 
+- commands _under_ last text row not taken into account (might just be `^secret^`)
+
 ## also
 transpile should be called "commit"  
 og means open graph
