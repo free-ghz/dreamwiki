@@ -1,0 +1,25 @@
+{
+    "name": "dreamwiki",
+    "displayName": "dreamwiki",
+    "description": "dreamwiki highlighting",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.62.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "dreamwiki",
+            "aliases": ["Dreamwiki dream", "dreamwiki"],
+            "extensions": [".dream"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "dreamwiki",
+            "scopeName": "source.dream",
+            "path": "./syntaxes/dreamwiki.tmLanguage.json"
+        }]
+    }
+}
