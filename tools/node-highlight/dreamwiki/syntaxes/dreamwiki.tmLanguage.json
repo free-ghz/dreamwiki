@@ -1,0 +1,40 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Dreamwiki dream",
+	"patterns": [
+		{
+			"include": "#grime"
+		},
+		{
+			"include": "#commands"
+		},
+		{
+			"include": "#comments"
+		}
+	],
+	"repository": {
+		"grime": {
+			"patterns": [{
+				"name": "variable.dreamwiki",
+				"match": "\\d"
+			}]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.dreamwiki",
+					"match": "^\\^(.*?)$"
+				}
+			]
+		},
+		"commands": {
+			"patterns": [
+				{
+					"name": "keyword.dreamwiki",
+					"match": "^\\^ (tags|title|secret|align|curtains) \\^(.*?)\\^$"
+				}
+			]
+		}
+	},
+	"scopeName": "source.dream"
+}
