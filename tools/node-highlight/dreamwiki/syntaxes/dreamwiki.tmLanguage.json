@@ -9,6 +9,9 @@
 			"include": "#commands"
 		},
 		{
+			"include": "#dont"
+		},
+		{
 			"include": "#comments"
 		}
 	],
@@ -31,7 +34,15 @@
 			"patterns": [
 				{
 					"name": "keyword.dreamwiki",
-					"match": "^\\^ (tags|title|secret|align|curtains) \\^(.*?)\\^$"
+					"match": "^\\^ (tags|title|secret|align|curtains|grimes|colour) \\^(.*?)\\^$"
+				}
+			]
+		},
+		"dont": {
+			"patterns": [
+				{
+					"name": "invalid.illegal.dreamwiki",
+					"match": "^\\^ (justify|color) \\^(.*?)\\^$"
 				}
 			]
 		}
