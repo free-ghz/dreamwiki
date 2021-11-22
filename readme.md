@@ -42,3 +42,5 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 transpile should be called "commit"  
 og means open graph
 
+## tools
+- syntax highlighting for vscode in `tools/node-highlight/dreamwiki`
