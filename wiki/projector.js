@@ -38,7 +38,7 @@ class Projector {
             output += ` <span class="grime">${curtains.right}</span>\n`
         }
         for (let row of this.page.textRows) {
-            if (index > 0) this.runCommandsForRow(index)
+            this.runCommandsForRow(index)
 
             let curtains = this.curtains(this.grimer)
             output += `<span class="grime">${curtains.left}</span> `
@@ -47,6 +47,7 @@ class Projector {
 
             index += 1
         }
+        this.runCommandsForRow(this.page.textRows.length) // stray tags after last text row
         for (let i = 0; i < 5; i++) {
             let curtains = this.curtains(this.grimer)
             output += `<span class="grime">${curtains.left}</span> `
