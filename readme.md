@@ -19,12 +19,15 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 - 'random' should just give ya a random page instead of going through the tag system
 - password protect the "transpiler" or something
 - global config
-  - page width?
+  - ~~page width?~~ no, we are committed to 40. deal! ^^
   - curtain width?
   - grime pools
   - open graph stuff
   - port
   - host? do we need it?
+- more alignment modes
+  - centered where spaces aren't stripped so you could draw something thats 20 chars wide and it would get padded with 10 on each side regardless of if it contains whitespace or no
+  - centered except the two edgemost tokens on each row are flushed to the sides to create like a pipe situation
 
 
 # bugs
