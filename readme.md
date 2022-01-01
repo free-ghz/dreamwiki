@@ -34,12 +34,9 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 - sometimes
 
 - doesn't vibe with words longer than 40 chars (might be independently true of all adjustment variants)
-
 - titlecase caps treats composite_links as one word, only capitalizing first letter of whole token
-
 - titlecase caps treats PARTial links as two words, capitalizing it like `PartIal`
-
-- commands _under_ last text row not taken into account (might just be `^secret^`)
+- `astral_projectionS` creates the link `stral_projections` instead of `astral_projection`
 
 ## also
 transpile should be called "commit"  
