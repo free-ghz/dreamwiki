@@ -33,26 +33,26 @@ class Projector {
         let index = 0
         for (let i = 0; i < 5; i++) {
             let curtains = this.curtains(this.grimer)
-            output += `<span class="grime">${curtains.left}</span> `
+            output += `<span aria-hidden="true" class="grime">${curtains.left}</span> `
             output += ' '.repeat(40)
-            output += ` <span class="grime">${curtains.right}</span>\n`
+            output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
         }
         for (let row of this.page.textRows) {
             this.runCommandsForRow(index)
 
             let curtains = this.curtains(this.grimer)
-            output += `<span class="grime">${curtains.left}</span> `
+            output += `<span aria-hidden="true" class="grime">${curtains.left}</span> `
             output += this.decorateRow(this.justifier(row))
-            output += ` <span class="grime">${curtains.right}</span>\n`
+            output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
 
             index += 1
         }
         this.runCommandsForRow(this.page.textRows.length) // stray tags after last text row
         for (let i = 0; i < 5; i++) {
             let curtains = this.curtains(this.grimer)
-            output += `<span class="grime">${curtains.left}</span> `
+            output += `<span aria-hidden="true" class="grime">${curtains.left}</span> `
             output += ' '.repeat(40)
-            output += ` <span class="grime">${curtains.right}</span>\n`
+            output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
         }
 
         this.output = output
@@ -90,7 +90,7 @@ class Projector {
                 return
             }
             if (token.type === 'grime') {
-                rowout += '<span class="grime">' + token.token + '</span>'
+                rowout += '<span aria-hidden="true" class="grime">' + token.token + '</span>'
                 return
             }
 
