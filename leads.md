@@ -33,8 +33,20 @@
 
 - people
     - amata texnologiyasi, richest person alive
-    - phobes, cerberus fo-bes, rouge ai
+    - phobes, cerberus fo-bes, rogue ai
     - cirrus and featherbite? where are they?
     - neytiri
     - hatsune miku
     - juniper helding, time traveller and lead singer in the band jupiter equinox
+
+- cerberii
+    - SE-EZC "sees" ("poster dog for the product launch")
+    - FE-LES
+    - FE-RES "feires"
+    - FO-BES "phobes" (rogue ai)
+    - LR_UKA (police)
+    - LR_UKS (police)
+
+# Texts about writing
+
+- [Invisible ink](https://invisibleinkblog.blogspot.com/2010/07/my-own-sixth-sense-why-shyamalan-is-not.html) about twists, rod sterling, proposal -> argument -> conclusion.
