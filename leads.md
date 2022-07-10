@@ -17,6 +17,8 @@
 - fluids from planets - in the right constellations - bridges dark space... flows into the living body
 - they find my mutilated body but the DNA is not human
 - why wouldn't you want to nurture an alien being that slowly takes you over?
+- magic pet bracelet
+- sottunga (small island next to åland)
 
 ## Tags
 
