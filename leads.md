@@ -34,7 +34,8 @@
 - people
     - amata texnologiyasi, richest person alive
     - phobes, cerberus fo-bes, rogue ai
-    - cirrus and featherbite? where are they?
+    - cirrus & featherbite, demons. where are they?
+    - lynne & hornblende (killers, murderers)
     - neytiri
     - hatsune miku
     - juniper helding, time traveller and lead singer in the band jupiter equinox
