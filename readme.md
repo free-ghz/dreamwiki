@@ -38,6 +38,7 @@ read the official documentation on https://dreamwiki.sixey.es/!primer
 - titlecase caps treats PARTial links as two words, capitalizing it like `PartIal`
 - `astral_projectionS` creates the link `stral_projections` instead of `astral_projection`
 - tags before the first text rows are output twice. multiple rows like this: ABCABC rather than AABBCC
+- terezi only works for first occurence of wovel - AAA becomes 4AA rather than 444
 
 ## also
 transpile should be called "commit"  
