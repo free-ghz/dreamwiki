@@ -13,6 +13,7 @@
 - the forest as a place where you can't die (if someone dies there they are brought back to life in a new body)
 - Scientists Create Synthetic Mouse Embryos
 - "offer immense promise -- but also tangible peril for those who feel they have no other option but to take the plunge into the digital unknown" (time magazine quote - don't steal it verbatim)
+- pesticide harmful to "uninteresting" plants, kills entire ecosystems near farmland, bc who cares about the flowers in the groves and such? just let me grow my wheat
 
 ## Empty
 
@@ -22,6 +23,7 @@
 - why wouldn't you want to nurture an alien being that slowly takes you over?
 - (magic pet) bracelet ... or magic (pet bracelet)
 - sottunga (small island next to åland)
+- "nephelometer", a tool, redefine it.
 
 ## Tags
 
