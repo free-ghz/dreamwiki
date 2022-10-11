@@ -24,6 +24,7 @@
 - (magic pet) bracelet ... or magic (pet bracelet)
 - sottunga (small island next to åland)
 - "nephelometer", a tool, redefine it.
+- galatic_underworld [milky graveyard dead stars](https://phys.org/news/2022-09-milky-graveyard-dead-stars.html)
 
 ## Tags
 
