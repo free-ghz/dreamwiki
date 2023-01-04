@@ -14,6 +14,9 @@
 - Scientists Create Synthetic Mouse Embryos
 - "offer immense promise -- but also tangible peril for those who feel they have no other option but to take the plunge into the digital unknown" (time magazine quote - don't steal it verbatim)
 - pesticide harmful to "uninteresting" plants, kills entire ecosystems near farmland, bc who cares about the flowers in the groves and such? just let me grow my wheat
+- plants will be forced into more of a "bio-economy" as to provide food for humans and animals
+    - how is this different from what's already going on? maybe theyre sentient or smth
+- KYNURENIC_ACID psychoactive, discovered in drug urine (named after)
 
 ## Empty
 
@@ -25,6 +28,7 @@
 - sottunga (small island next to åland)
 - "nephelometer", a tool, redefine it.
 - galatic_underworld [milky graveyard dead stars](https://phys.org/news/2022-09-milky-graveyard-dead-stars.html)
+- to drink even one sip will make you bleed from the lips (but in a good way)
 
 ## Tags
 
