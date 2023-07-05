@@ -1,47 +1,47 @@
-<h4>{{pages}} pages!</h4>
+<h1>〶 {{pages}} pages!</h1>
 rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
 <br /><br />
+<div class="columns">
 <div class="stat">
-  <h3>tags</h3>
+  <h2>⎆ tags</h2>
   ordered by how many pages use them in their ^ tags ^ command.
   <p><span class="false">red</span> means nobody links to this tag.
-  <p>
+</div>
+
+<div class="stat">
+  <h2>⎋ links</h2>
+  ordered by how many pages are using them (in their text)
+  <p><span class="false">red</span> means no page uses this tag.
+</div>
+
+<div class="stat">
+  <h2>⌮ fractions</h2>
+  in/out ie higher up = more pages using as tag then pages linking
+  <p><span class="false">red</span> means no connection is made
+</div>
+
+<div class="stat">
+  <h2>⎈ all pages</h2>
+  i forgot what this was about but here's all pages i guess
+  <p><span class="false">red</span> means no connection is made
+</div>
+
+
   <ol class="statlist">
     {{#each tagReaches}}
       <li class="{{real}} page" data-link="{{tag}}">{{tag}} ({{reach}})</li>
     {{/each}}
   </ol>
-</div>
-
-<div class="stat">
-  <h3>links</h3>
-  ordered by how many pages are using them (in their text)
-  <p><span class="false">red</span> means no page uses this tag.
-  <p>
   <ol class="statlist">
     {{#each linksFired}}
       <li class="{{real}} page" data-link="{{link}}">{{link}} ({{intensity}})</li>
     {{/each}}
   </ol>
-</div>
-
-<div class="stat">
-  <h3>fractions</h3>
-  in/out ie higher up = more pages using as tag then pages linking
-  <p><span class="false">red</span> means no connection is made
-  <p>
   <ol class="statlist">
     {{#each fractions}}
-      <li class="{{real}} page" data-link="{{key}}">{{key}} ({{in}}/{{out}})</li>
+      <li class="{{real}} page" data-link="{{key}}">{{key}} ({{out}}→{{in}})</li>
     {{/each}}
   </ol>
-</div>
-
-<div class="stat">
-  <h3>all pages</h3>
-  i forgot what this was about but here's all pages i guess
-  <p><span class="false">red</span> means no connection is made
-  <p>
   <ol class="statlist">
     {{#each allPages}}
       <li class="fey" data-page="{{fileName}}">{{fileName}} &lt;{{title}}&gt;</li>
@@ -50,7 +50,7 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
 </div>
 
 
-<br style="clear:both;" />
+<hr style="clear:both;" />
 
 <h2>Todo</h2>
 <ul>
