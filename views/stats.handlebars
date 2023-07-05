@@ -2,29 +2,29 @@
 rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
 <br /><br />
 <div class="columns">
-<div class="stat">
-  <h2>⎆ tags</h2>
-  ordered by how many pages use them in their ^ tags ^ command.
-  <p><span class="false">red</span> means nobody links to this tag.
-</div>
+  <div class="stat">
+    <h2>⎆ tags</h2>
+    ordered by how many pages use them in their ^ tags ^ command.
+    <p><span class="false">red</span> means nobody links to this tag.
+  </div>
 
-<div class="stat">
-  <h2>⎋ links</h2>
-  ordered by how many pages are using them (in their text)
-  <p><span class="false">red</span> means no page uses this tag.
-</div>
+  <div class="stat">
+    <h2>⎋ links</h2>
+    ordered by how many pages are using them (in their text)
+    <p><span class="false">red</span> means no page uses this tag.
+  </div>
 
-<div class="stat">
-  <h2>⌮ fractions</h2>
-  in/out ie higher up = more pages using as tag then pages linking
-  <p><span class="false">red</span> means no connection is made
-</div>
+  <div class="stat">
+    <h2>⌮ fractions</h2>
+    in/out ie higher up = more pages using as tag then pages linking
+    <p><span class="false">red</span> means no connection is made
+  </div>
 
-<div class="stat">
-  <h2>⎈ all pages</h2>
-  i forgot what this was about but here's all pages i guess
-  <p><span class="false">red</span> means no connection is made
-</div>
+  <div class="stat">
+    <h2>⎈ all pages</h2>
+    i forgot what this was about but here's all pages i guess
+    <p><span class="false">red</span> means no connection is made
+  </div>
 
 
   <ol class="statlist">
@@ -49,10 +49,8 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
   </ol>
 </div>
 
-
-<hr style="clear:both;" />
-
-<h2>Todo</h2>
+<hr>
+<h2>⌖ Todo</h2>
 <ul>
     {{#each todos}}
         <li>{{fileName}}:
@@ -64,6 +62,17 @@ rendering took {{ time }} mseccs and building stats took {{ time2 }} more.
         </li>
     {{/each}}
 </ul>
+
+<hr>
+<h2>⎊ Hallucinations</h2>
+<div class="hallucinations">
+  {{#each hallucinations}}
+    <div class="hallis">
+      <span>⎆</span><div class="htags">{{#each tags}}<span>{{this}}</span>{{/each}}</div>
+      <span>⎋</span><div class="hlinks">{{#each links}}<span>{{this}}</span>{{/each}}</div>
+    </div>
+  {{/each}}
+</div>
 
 
 <!-- bazinga i dont care -->
