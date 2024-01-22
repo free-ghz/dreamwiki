@@ -1,13 +1,12 @@
 'use strict'
-const router = require('express').Router()
-const fs = require('fs').promises
+import express from 'express';
+import { promises as fs } from 'fs'
 
-const helpers = require('../lib/helpers.js')
-const choice = helpers.choice
+import { choice } from '../lib/helpers.js'
+import Page from '../wiki/page.js'
+import Projector from '../wiki/projector.js'
 
-const Page = require('../wiki/page')
-const Projector = require('../wiki/projector')
-
+const router = express.Router();
 router.route('/').all((req, res) => {
   return res.redirect('/welcome.dream/')
 })
@@ -22,7 +21,7 @@ router.route('/:dreamfile/:link').all((req, res) => {
   return res.redirect('/' + desiredPage + '/')
 })
 
-module.exports = router
+export default router
 
 async function pagefuck (req, res) {
   if (req.url.includes('..')) return req.next()

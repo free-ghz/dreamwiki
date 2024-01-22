@@ -1,7 +1,8 @@
 'use strict'
-const Transpiler = require('../wiki/transpiler')
-const router = require('express').Router()
+import express from 'express';
+import Transpiler from '../wiki/transpiler.js';
 
+const router = express.Router();
 router.route('/!transpiler/').all(async (req, res) => {
   
   let transpiler = new Transpiler();
@@ -10,5 +11,5 @@ router.route('/!transpiler/').all(async (req, res) => {
   res.redirect('/!stats/')
 })
 
-module.exports = router
+export default router
 

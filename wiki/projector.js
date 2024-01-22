@@ -1,12 +1,10 @@
 'use strict'
 
-const helpers = require('../lib/helpers.js')
-
-const grimes = require('../lib/grimes.js')
-const curtains = require('../lib/curtains.js')
-const justify = require('../lib/justify.js')
-const caps = require('../lib/caps.js')
-const colour = require('../lib/colour.js')
+import { grimerFor } from '../lib/grimes.js'
+import { curtainsFor } from '../lib/curtains.js'
+import { justifierFor } from '../lib/justify.js'
+import { capsFor } from '../lib/caps.js'
+import colour from '../lib/colour.js'
 
 class Projector {
     constructor(page) {
@@ -15,10 +13,10 @@ class Projector {
         this.secrets = []
 
         // randomize a default
-        this.grimer = grimes.grimerFor('stable')
-        this.curtains = curtains.curtainsFor('random', this.grimer)
-        this.justifier = justify.justifierFor('auto')
-        this.caps = caps.capsFor('random')
+        this.grimer = grimerFor('stable')
+        this.curtains = curtainsFor('random', this.grimer)
+        this.justifier = justifierFor('auto')
+        this.caps = capsFor('random')
         this.colourScheme = colour.randomScheme()
 
         // override it if there's something on row 0
@@ -61,16 +59,16 @@ class Projector {
     runCommandsForRow(row) {
         this.page.commandRows.filter(command => command.row === row).forEach(command => {
             if (command.command === 'grimes') {
-                this.grimer = grimes.grimerFor(command.params)
+                this.grimer = grimerFor(command.params)
             }
             if (command.command === 'curtains') {
-                this.curtains = curtains.curtainsFor(command.params)
+                this.curtains = curtainsFor(command.params)
             }
             if (command.command === 'justify' || command.command === 'align') {
-                this.justifier = justify.justifierFor(command.params)
+                this.justifier = justifierFor(command.params)
             }
             if (command.command === 'caps') {
-                this.caps = caps.capsFor(command.params)
+                this.caps = capsFor(command.params)
             }
             if (command.command === 'colour') {
                 this.colourScheme = colour.schemeFromHex(command.params)
@@ -149,4 +147,4 @@ class Projector {
     }
 }
 
-module.exports = Projector
+export default Projector
