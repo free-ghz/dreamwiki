@@ -9,8 +9,7 @@ class Page {
         this.tags = data.tags
     }
 
-    static readFromPage(text, filename) {
-        let rows = text.split(/\r?\n/)
+    static readFromPage(rows, filename) {
         let textRows = []
         let commandRows = []
         let rowNumber = 0

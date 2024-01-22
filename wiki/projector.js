@@ -7,8 +7,9 @@ import { capsFor } from '../lib/caps.js'
 import colour from '../lib/colour.js'
 
 class Projector {
-    constructor(page) {
+    constructor(page, wiki) {
         this.page = page
+        this.wiki = wiki
 
         this.secrets = []
 
@@ -141,8 +142,9 @@ class Projector {
     }
 
     linkExists (word, filename) {
-        if (!global.allLinks[word.toLowerCase()]) return false
-        if (filename && global.allLinks[word.toLowerCase()].length === 1 && global.allLinks[word.toLowerCase()][0] === filename) return false
+        if (!this.wiki.tagExists(word)) return false
+        // can we reach somewhere else than here? (self is returned as last resort)
+        if (filename && this.wiki.randomLinkForTag(word, filename) == filename) return false
         return true
     }
 }
