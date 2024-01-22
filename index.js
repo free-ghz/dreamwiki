@@ -1,7 +1,6 @@
 'use strict'
 import express from 'express'
-import hbars from 'express-handlebars'
-import { join } from 'path'
+import { engine } from 'express-handlebars'
 import { promises as fs } from 'fs'
 import Transpiler from './wiki/transpiler.js'
 import transpilerRoute from './routes/transpiler.js'
@@ -14,7 +13,7 @@ const porttu = 7004
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('./static'))
-app.engine('handlebars', hbars({ defaultLayout: 'main' }))
+app.engine('handlebars', engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.listen(porttu, () => { console.log('röjar ralf på port', porttu) })
 
