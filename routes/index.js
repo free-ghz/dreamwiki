@@ -6,15 +6,11 @@ import Projector from '../wiki/projector.js'
 
 function generateRouter(wiki) {
   const pagefuck = async (req, res) => {
-    if (req.url.includes('..')) return req.next()
-    if (req.url.includes('.') && !req.url.includes('.dream')) return req.next()
-  
     // first of all, this is important bc of the url scheme
     if (!req.url.endsWith('/')) return res.redirect(req.url + '/')
   
     let dreamfile = 'welcome.dream'
     if (req.params.dreamfile) {
-      // better security checks here later!
       if (req.params.dreamfile.endsWith('.dream')) {
         dreamfile = req.params.dreamfile
       } else if (wiki.tagExists(req.params.dreamfile)) {
@@ -57,7 +53,7 @@ function generateRouter(wiki) {
     return res.redirect('/' + desiredPage + '/')
   })
 
-  return router;
+  return router
 }
 
 export default generateRouter
