@@ -1,7 +1,6 @@
 'use strict'
 import express from 'express';
 
-import Page from '../wiki/page.js'
 import Projector from '../wiki/projector.js'
 
 function generateRouter(wiki) {
@@ -21,15 +20,14 @@ function generateRouter(wiki) {
       }
     }
   
-    let pagetext = wiki.dreamsByFilename.get(dreamfile).data;
-    if (pagetext === undefined) return
+    let dream = wiki.dreamsByFilename.get(dreamfile);
+    if (dream === undefined) return
   
-    let page = Page.readFromPage(pagetext, dreamfile)
-    let projector = new Projector(page, wiki)
+    let projector = new Projector(dream, wiki)
   
     let pageData = {
-      title: page.title,
-      filename: page.filename,
+      title: dream.title,
+      filename: dream.fileName,
       secrets: projector.secrets,
       output: projector.output,
       colour: projector.colourScheme
