@@ -41,10 +41,10 @@ class Projector {
             output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
         }
         for (let row of this.dream.tokens) {
-            let disposableCopy = [...row]
-            if (row[0].type === "command") {
+            let disposableCopy = this.createCopy(row)
+            if (disposableCopy[0].type === "command") {
                 if (index > 0) {
-                    this.runCommandsForRow(row[0])
+                    this.runCommandsForRow(disposableCopy[0])
                 }
                 continue
             }
@@ -64,6 +64,14 @@ class Projector {
         }
 
         this.output = output
+    }
+
+    createCopy(row) {
+        let copy = []
+        row.forEach(tokie => {
+            copy.push({...tokie})
+        })
+        return copy
     }
 
     runCommandsForRow(row) {
