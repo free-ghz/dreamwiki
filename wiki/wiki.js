@@ -1,6 +1,6 @@
 'use strict'
 import { getDreamfiles, populateLinks } from "../filereader.js"
-import { choice } from '../lib/helpers.js'
+import { choice, lengthOfRow } from '../lib/helpers.js'
 
 console.log('reading dreams from folder...')
 let dreams = await getDreamfiles()
@@ -15,6 +15,7 @@ console.log("found", sortedTags.length, "declared tags.")
 
 console.log("building graph...")
 dreams.forEach(dream => tokenize(dream, sortedTags))
+dreams.forEach(fixupTokenAndRowLengths)
 dreams.forEach(dream => populateLinks(dream, sortedTags))
 let dreamsByFilename = dreams.reduce((dreamMap, dream) => dreamMap.set(dream.fileName, dream), new Map())
 let dreamsByTag = new Map()
@@ -144,6 +145,58 @@ function findLinksRecursive(token, tags) {
     }
 
     return tokens
+}
+
+function fixupTokenAndRowLengths(dream) {
+    for (let i = 0; i < dream.tokens.length; i++) {
+        dream.tokens[i] = fixupTokenLengths(dream.tokens[i])
+    }
+
+    let newrows = []
+    dream.tokens.forEach(row => {
+        let rowLength = lengthOfRow(row)
+        if (rowLength <= 40) {
+            newrows.push(row)
+            return
+        }
+
+        while (row.length > 0) {
+            let currentRow = []
+            let pivot = row[0]
+            while (lengthOfRow([...currentRow, pivot]) <= 40) {
+                currentRow.push(row[0])
+                row = row.slice(1)
+                if (row.length == 0) break
+                pivot = row[0]
+            }
+            newrows.push(currentRow)
+        }
+    })
+    dream.tokens = newrows
+}
+
+function fixupTokenLengths(row) {
+    let newrow = []
+    row.forEach(token => {
+        if (token.content.length <= 40) {
+            newrow.push(token)
+            return
+        }
+
+        let content = token.content
+        let overflow = []
+        while (content.length > 40) {
+            let first40 = content.substring(0, 40)
+            overflow.push(first40)
+            content = content.substring(40)
+        }
+        overflow.push(content)
+        overflow.forEach(subtoken => {
+            let contentAsObject = {content: subtoken}
+            newrow.push({...token, ...contentAsObject})
+        })
+    })
+    return newrow
 }
 
 export default {
