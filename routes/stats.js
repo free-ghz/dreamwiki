@@ -1,9 +1,9 @@
 'use strict'
-const router = require('express').Router()
-const helpers = require('../lib/helpers.js')
-const choice = helpers.choice
+import express from 'express';
+import { choice } from '../lib/helpers.js'
 
 
+const router = express.Router();
 router.route('/!stats/').all(async (req, res) => {
   let bazinga = { allLinks: global.allLinks, allTags: global.allTags, pages: global.completeKeyed }
   bazinga = JSON.stringify(bazinga)
@@ -49,4 +49,4 @@ router.route('/!stats/').all(async (req, res) => {
   res.render('stats.handlebars', datta)
 })
 
-module.exports = router
+export default router
