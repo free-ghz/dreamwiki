@@ -5,6 +5,7 @@ import transpilerRoute from './routes/transpiler.js'
 import statsRoute from './routes/stats.js'
 import primerRoute from './routes/primer.js'
 import indexRoute from './routes/index.js'
+import slurpRoute from './routes/slurp.js'
 import wiki from './wiki/wiki.js'
 
 const porttu = 7004
@@ -25,6 +26,7 @@ app.use((request, response, next) => {
 app.use('/', transpilerRoute)
 app.use('/', statsRoute)
 app.use('/', primerRoute)
+app.use('/', slurpRoute(wiki))
 app.use('/', indexRoute(wiki))
 
 app.use((request, response, next) => {
