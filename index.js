@@ -1,45 +1,20 @@
 'use strict'
-const express = require('express')
-const hbars = require('express-handlebars')
-const bodyParser = require('body-parser')
-const path = require('path')
+import express from 'express'
+import { engine } from 'express-handlebars'
+import transpilerRoute from './routes/transpiler.js'
+import statsRoute from './routes/stats.js'
+import primerRoute from './routes/primer.js'
+import indexRoute from './routes/index.js'
+import wiki from './wiki/wiki.js'
+
 const porttu = 7004
-const fs = require('fs').promises
-const Transpiler = require('./wiki/transpiler')
 
 const app = express()
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, '/static')))
-app.engine('handlebars', hbars({ defaultLayout: 'main' }))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('./static'))
+app.engine('handlebars', engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.listen(porttu, () => { console.log('röjar ralf på port', porttu) })
-
-// Read "offline" storage
-const jsonColdStorage = [
-  'complete',
-  'completeKeyed',
-  'allLinks',
-  'allTags',
-  'stats',
-  'todos'
-]
-let needsUpdate = false
-let index = 0
-jsonColdStorage.forEach(async (variable) => {
-  let filename = `./static/${variable}.json`
-  await fs.readFile(filename, 'utf8').then(text => {
-    global[variable] = JSON.parse(text)
-    console.log(`read ${filename}`)
-  }).catch(async err => {
-    console.log(`couldn't read ${filename} - it will be created.`)
-    needsUpdate = true
-  })
-  if (needsUpdate && index === jsonColdStorage.length - 1) {
-    let transpiler = new Transpiler()
-    transpiler.parseBooks()
-  }
-  index += 1
-})
 
 app.use((request, response, next) => {
   console.log(request.url)
@@ -47,10 +22,10 @@ app.use((request, response, next) => {
   next()
 })
 
-app.use('/', require('./routes/transpiler.js'))
-app.use('/', require('./routes/stats.js'))
-app.use('/', require('./routes/primer.js'))
-app.use('/', require('./routes/index.js'))
+app.use('/', transpilerRoute)
+app.use('/', statsRoute)
+app.use('/', primerRoute)
+app.use('/', indexRoute(wiki))
 
 app.use((request, response, next) => {
   response.status(404).send('404 lmao')

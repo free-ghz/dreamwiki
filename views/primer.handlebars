@@ -20,7 +20,7 @@ ok so you just write a bunch of text files and put em in the <b>books/</b> folde
 <ol>
   <li>they are to end with <b>.dream</b> like "sludge.dream"</li>
   <li>use only "unix" line endinges ie. put \n but never \r (if u dont unerstand this it means dont be on windows computer)</li>
-  <li>the max pagewidth is 40 chars. longer paragraphs will automatically be flowed unto new lines but dont put a single 41 character word or the shit will fail</li>
+  <li>the max pagewidth is 40 chars. longer paragraphs will automatically be flowed unto new lines</li>
   <li>things written in UPPER_CASE become teh brighter links (in the beginning only these were linkified but that sucked</li>
   <li>numbers are <i>transformed into grime!</i> theyre on a scale 0 (boulders) to 9 (pebbles). sevens are nice. <b>this means that you should avoid putting them in tags and shit.</b></li>
   <li>u can control some stuff with commands
@@ -35,7 +35,7 @@ ok so you just write a bunch of text files and put em in the <b>books/</b> folde
     <ol>
       <li><u>title</u> - sets the title of the page (shown in tab/bookmarku)</li>
       <li><u>tags</u> - decides which words will link to this page. space separated. u can use underscore like blood_disease and it will render converted to a space. u can have many of these as well</li>
-      <li><u>justify</u> - decides where to flow the text. possible arguments:
+      <li><u>align</u> - (or "justify") decides where to flow the text. possible arguments:
         <ol>
           <li><u>auto</u> (default) - centers if the line is short, otherwise does the block thing (inserts extra spaces until the line is 40 wide)</li>
           <li><u>block</u> - alaways do tha block thing</li>
@@ -65,7 +65,6 @@ ok so you just write a bunch of text files and put em in the <b>books/</b> folde
           <li><u>random</u> (default) - random CHOICE of one of the following (except dicecase, and weighted towards uppercase):</li>
           <li><u>uppercase</u> - UPPER CASE</li>
           <li><u>lowercase</u> - lower case</li>
-          <li><u>titlecase</u> - Title Case</li>
           <li><u>dicecase</u> - dICe CaSE (rANDoM PEr lETtER)</li>
           <li><u>terezi</u> - UPP3RC4S3, T3R3Z1 QU1RK</li>
         </ol>
@@ -90,7 +89,7 @@ i should probably also say something about the url scheme doncha think. ok here 
 <h4>also</h4>
 <p>page relationships are defined in the .dream files but theylive in "computer memory", and this is not updated automatically... sad times...
 <p>they are built on server startup and when you navigate to /!transipiler
-<p>and yea everytime you add some .dream shit in book/ and u wanna commit them yo need to run th /!transpiler again<br />
+<p>and yea everytime you add some .dream shit in book/ and u wanna see them yo need to run th /!transpiler again (or restart)<br />
 
 (maybe i already said this)<img src="/dunno.png" alt="big shrug" />
 <br /><br />

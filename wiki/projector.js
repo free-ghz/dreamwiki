@@ -1,34 +1,37 @@
 'use strict'
 
-const helpers = require('../lib/helpers.js')
-
-const grimes = require('../lib/grimes.js')
-const curtains = require('../lib/curtains.js')
-const justify = require('../lib/justify.js')
-const caps = require('../lib/caps.js')
-const colour = require('../lib/colour.js')
+import { grimerFor, grimeString } from '../lib/grimes.js'
+import { curtainsFor } from '../lib/curtains.js'
+import { justifierFor } from '../lib/justify.js'
+import { capsFor } from '../lib/caps.js'
+import colour from '../lib/colour.js'
 
 class Projector {
-    constructor(page) {
-        this.page = page
+    constructor(dream, wiki) {
+        this.dream = dream
+        this.wiki = wiki
 
         this.secrets = []
 
         // randomize a default
-        this.grimer = grimes.grimerFor('stable')
-        this.curtains = curtains.curtainsFor('random', this.grimer)
-        this.justifier = justify.justifierFor('auto')
-        this.caps = caps.capsFor('random')
+        this.grimer = grimerFor('stable')
+        this.curtains = curtainsFor('random', this.grimer)
+        this.justifier = justifierFor('auto')
+        this.caps = capsFor('random')
         this.colourScheme = colour.randomScheme()
-
-        // override it if there's something on row 0
-        this.runCommandsForRow(0)
 
         // generate the page
         this.render()
     }
 
     render() {
+        for (let row of this.dream.tokens) {
+            if (row[0].type === "command") {
+                this.runCommandsForRow(row[0])
+            } else {
+                break
+            }
+        }
         let output = ""
         let index = 0
         for (let i = 0; i < 5; i++) {
@@ -37,17 +40,22 @@ class Projector {
             output += ' '.repeat(40)
             output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
         }
-        for (let row of this.page.textRows) {
-            this.runCommandsForRow(index)
+        for (let row of this.dream.tokens) {
+            let disposableCopy = this.createCopy(row)
+            if (disposableCopy[0].type === "command") {
+                if (index > 0) {
+                    this.runCommandsForRow(disposableCopy[0])
+                }
+                continue
+            }
 
             let curtains = this.curtains(this.grimer)
             output += `<span aria-hidden="true" class="grime">${curtains.left}</span> `
-            output += this.decorateRow(this.justifier(row))
+            output += this.decorateRow(disposableCopy)
             output += ` <span aria-hidden="true" class="grime">${curtains.right}</span>\n`
 
             index += 1
         }
-        this.runCommandsForRow(this.page.textRows.length) // stray tags after last text row
         for (let i = 0; i < 5; i++) {
             let curtains = this.curtains(this.grimer)
             output += `<span aria-hidden="true" class="grime">${curtains.left}</span> `
@@ -58,51 +66,65 @@ class Projector {
         this.output = output
     }
 
-    runCommandsForRow(row) {
-        this.page.commandRows.filter(command => command.row === row).forEach(command => {
-            if (command.command === 'grimes') {
-                this.grimer = grimes.grimerFor(command.params)
-            }
-            if (command.command === 'curtains') {
-                this.curtains = curtains.curtainsFor(command.params)
-            }
-            if (command.command === 'justify' || command.command === 'align') {
-                this.justifier = justify.justifierFor(command.params)
-            }
-            if (command.command === 'caps') {
-                this.caps = caps.capsFor(command.params)
-            }
-            if (command.command === 'colour') {
-                this.colourScheme = colour.schemeFromHex(command.params)
-            }
-            if (command.command === 'secret') {
-                this.secrets.push(command.params)
-            }
+    createCopy(row) {
+        let copy = []
+        row.forEach(tokie => {
+            copy.push({...tokie})
         })
+        return copy
+    }
+
+    runCommandsForRow(row) {
+        let particles = row.content.split("^")
+        if (particles.length < 3) return
+
+        let command = particles[1].trim()
+        let params = particles[2].trim()
+        if (command === 'grimes') {
+            this.grimer = grimerFor(params)
+        }
+        if (command === 'curtains') {
+            this.curtains = curtainsFor(params)
+        }
+        if (command === 'justify' || command === 'align') {
+            this.justifier = justifierFor(params)
+        }
+        if (command === 'caps') {
+            this.caps = capsFor(params)
+        }
+        if (command === 'colour') {
+            this.colourScheme = colour.schemeFromHex(params)
+        }
+        if (command === 'secret') {
+            this.secrets.push(params)
+        }
     }
 
     decorateRow(row) {
-        let tokens = this.findTokens(row)
+        row = this.justifier(row)
+
         let rowout = ''
-        tokens.forEach(token => {
-            if (token.type === 'etc') {
-                rowout += token.token
+        row.forEach(token => {
+            if (token.type === 'etc' || token.type === 'whitespace') {
+                rowout += token.content
                 return
             }
             if (token.type === 'grime') {
-                rowout += '<span aria-hidden="true" class="grime">' + token.token + '</span>'
+                rowout += '<span aria-hidden="true" class="grime">'
+                       + grimeString(token.content, this.grimer)
+                       + '</span>'
                 return
             }
 
-            let wordlink = this.linkExists(token.token, this.page.filename)
-            let capsOrNot = ''
-            let tokenDisplay = token.token.replace(/_/g, ' ')
+            let wordlink = this.linkExists(token.content, this.dream.fileName)
+            let extraAttributesForElement = ''
+            let tokenDisplay = token.content.replace(/_/g, ' ')
             tokenDisplay = this.caps(tokenDisplay)
-            if (token.type === 'uppercase') {
-                capsOrNot = 'class="link"'
+            if (token.type === 'upper') {
+                extraAttributesForElement = 'class="link"'
             }
             if (wordlink) {
-                rowout += '<a href="' + token.token.toLowerCase() + '/" ' + capsOrNot + '>' + tokenDisplay + '</a>'
+                rowout += '<a href="' + token.content.toLowerCase() + '/" ' + extraAttributesForElement + '>' + tokenDisplay + '</a>'
             } else {
                 rowout += tokenDisplay
             }
@@ -110,43 +132,12 @@ class Projector {
         return rowout
     }
 
-    findTokens(row) {
-        let pos = 0
-        let tokens = []
-        let ack = ''
-        let type = 'nada'
-        while (pos < 40) {
-            let next = row.substr(pos, 1)
-            if (pos === 0) type = this.tokenType(next)
-            if (this.tokenType(next) !== type && next !== '_') {
-                tokens.push({ token: ack, type })
-                type = this.tokenType(next)
-                ack = ''
-            }
-            // ill try to do the grime duty here
-            if (type === 'grime') {
-                ack += this.grimer(next)
-            } else {
-                ack += next
-            }
-            pos += 1
-        }
-        tokens.push({ token: ack, type })
-        return tokens
-    }
-      
-    tokenType(letter) {
-        if (letter.match(/[0-9]/)) return 'grime'
-        if (letter.match(/[a-z_]/)) return 'lowercase'
-        if (letter.match(/[A-Z_]/)) return 'uppercase'
-        return 'etc'
-    }
-
     linkExists (word, filename) {
-        if (!global.allLinks[word.toLowerCase()]) return false
-        if (filename && global.allLinks[word.toLowerCase()].length === 1 && global.allLinks[word.toLowerCase()][0] === filename) return false
+        if (!this.wiki.tagExists(word)) return false
+        // can we reach somewhere else than here? (self is returned as last resort)
+        if (filename && this.wiki.randomLinkForTag(word, filename) == filename) return false
         return true
     }
 }
 
-module.exports = Projector
+export default Projector

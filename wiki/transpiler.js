@@ -1,5 +1,5 @@
 'use strict'
-const fs = require('fs').promises
+import { promises as fs } from 'fs'
 
 class Transpiler {
 
@@ -270,4 +270,4 @@ class Transpiler {
     }
 }
 
-module.exports = Transpiler
+export default Transpiler
